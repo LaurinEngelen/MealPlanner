@@ -1,7 +1,9 @@
 package com.app.mealplanner
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         // RecyclerView Setup
         setupRecyclerView()
+
     }
 
     private fun setupBottomNavigation() {
@@ -49,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         // Kein findViewById mehr notwendig
         binding.recyclerViewRecipes.adapter = recipeAdapter
         binding.recyclerViewRecipes.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewRecipes.addItemDecoration(MarginItemDecoration(16))
 
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
@@ -71,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 if (recipes.isEmpty()){
                     // Hinzufügen von neuen Rezepten
                     val ingredients = arrayListOf("Zutat".plus(i))
-                    val newRecipe = Recipe(i, "Rezept".plus(i), ingredients)
+                    val newRecipe = Recipe(i, "Rezept".plus(i), R.drawable.ic_launcher_background,ingredients, "Zubereitungstext".plus(i))
                     recipeAdapter.addRecipe(newRecipe)
                     Log.d("LIST", "notified")
                     i++
@@ -82,12 +86,28 @@ class MainActivity : AppCompatActivity() {
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(binding.recyclerViewRecipes)
     }
-    //createRecipes muss implementiert werden
     private fun createRecipes(): List<Recipe> {
         val list: MutableList<Recipe> = mutableListOf()
-        val ingredients = arrayListOf("Zutat1", "Zutat2")
-        list.add(Recipe(0, "Rezept1", ingredients))
-        list.add(Recipe(1, "Rezept2", ingredients))
+        val ingredients = listOf("Zutat 1", "Zutat 2", "Zutat 3")
+        val preparation = "Schritt 1...\nSchritt 2...\nSchritt 3..."
+        list.add(Recipe(0,"Rezept 1", R.drawable.ic_launcher_background, ingredients, preparation))
+        list.add(Recipe(1,"Rezept 2", null, ingredients, preparation))
         return list
+    }
+}
+// add this class to the MainActivity class
+class MarginItemDecoration(private val margin: Int) : RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(
+        outRect: Rect, view: View,
+        parent: RecyclerView, state: RecyclerView.State
+    ) {
+        with(outRect) {
+            if (parent.getChildAdapterPosition(view) == 0) {
+                top = margin
+            }
+            left = margin
+            right = margin
+            bottom = margin
+        }
     }
 }
