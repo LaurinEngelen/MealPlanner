@@ -19,6 +19,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mergeRecipesFromAssetsAndInternalStorage()
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewRecipes)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -65,9 +66,19 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
     }
 
     private fun loadRecipes(): MutableList<Recipe> {
-        val recipesFile = requireContext().assets.open("recipes.json").bufferedReader().use { it.readText() }
-        val type = object : TypeToken<MutableList<Recipe>>() {}.type
-        return Gson().fromJson<MutableList<Recipe>>(recipesFile, type)
+        val recipesFile = File(requireContext().filesDir, "recipes.json")
+        return if (recipesFile.exists()) {
+            try {
+                val json = recipesFile.readText()
+                val type = object : TypeToken<MutableList<Recipe>>() {}.type
+                Gson().fromJson(json, type)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                mutableListOf()
+            }
+        } else {
+            mutableListOf()
+        }
     }
 
     private fun loadFavorites(): MutableList<Recipe> {
@@ -119,5 +130,31 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             favorites.removeIf { it.id == recipe.id }
             saveFavorites(favorites) // Save updated favorites
         }
+    }
+
+    private fun mergeRecipesFromAssetsAndInternalStorage() {
+        val recipesFile = File(requireContext().filesDir, "recipes.json")
+        val internalRecipes: MutableList<Recipe> = if (recipesFile.exists()) {
+            val json = recipesFile.readText()
+            val type = object : TypeToken<MutableList<Recipe>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            mutableListOf()
+        }
+
+        val assetRecipes: MutableList<Recipe> = try {
+            val json = requireContext().assets.open("recipes.json").bufferedReader().use { it.readText() }
+            val type = object : TypeToken<MutableList<Recipe>>() {}.type
+            Gson().fromJson(json, type)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            mutableListOf()
+        }
+
+        // Merge recipes, avoiding duplicates by `id`
+        val mergedRecipes = (internalRecipes + assetRecipes).distinctBy { it.id }.toMutableList()
+
+        // Save merged recipes back to internal storage
+        recipesFile.writeText(Gson().toJson(mergedRecipes))
     }
 }
