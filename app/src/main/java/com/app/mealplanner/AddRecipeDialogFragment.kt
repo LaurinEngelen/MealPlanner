@@ -56,6 +56,11 @@ class AddRecipeDialogFragment : DialogFragment() {
         val saveButton: Button = view.findViewById(R.id.buttonAddRecipe)
         val ingredientsRecyclerView: RecyclerView = view.findViewById(R.id.ingredientsRecyclerView)
 
+        val backButton: View = view.findViewById(R.id.backButton) // Replace with the actual ID of the back symbol
+        backButton.setOnClickListener {
+            dismiss() // Close the dialog
+        }
+
         // Set up RecyclerView
         ingredientsAdapter = IngredientsAdapter(ingredients)
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())

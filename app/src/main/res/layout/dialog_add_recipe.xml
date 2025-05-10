@@ -1,8 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
-    android:textColor="@android:color/white"
     android:padding="16dp">
 
     <LinearLayout
@@ -19,12 +19,13 @@
             android:background="@android:color/black">
 
             <ImageView
+                android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_menu_revert"
                 android:contentDescription="Back"
                 android:padding="8dp"
-                android:tint="@android:color/white" />
+                app:tint="@android:color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,7 +55,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/darker_gray" />
 
         <!-- Image Picker -->
         <TextView
@@ -94,7 +95,7 @@
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/darker_gray" />
 
         <!-- Ingredients -->
         <TextView
@@ -109,7 +110,6 @@
             android:id="@+id/ingredientsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:textColor="@android:color/white"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="8dp" />
 
@@ -124,7 +124,7 @@
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/darker_gray" />
 
         <!-- Instructions -->
         <TextView
@@ -135,18 +135,25 @@
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/instructionsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="8dp" />
+
         <EditText
-            android:id="@+id/inputInstructions"
+            android:id="@+id/inputNewInstruction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add instructions"
-            android:inputType="textMultiLine"
-            android:lines="4"
+            android:hint="Add new instruction"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/darker_gray" />
 
         <!-- Servings -->
         <TextView
@@ -167,7 +174,7 @@
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/darker_gray" />
 
         <!-- Prep Time -->
         <TextView
@@ -194,7 +201,7 @@
                 android:background="@drawable/edit_text_background"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:textColorHint="@android:color/darker_gray" />
 
             <EditText
                 android:id="@+id/inputPrepMinutes"
@@ -207,7 +214,7 @@
                 android:padding="8dp"
                 android:layout_marginStart="8dp"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:textColorHint="@android:color/darker_gray" />
         </LinearLayout>
 
         <!-- Notes -->
@@ -230,7 +237,7 @@
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/darker_gray" />
 
         <!-- Add Recipe Button -->
         <Button
