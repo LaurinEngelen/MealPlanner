@@ -15,6 +15,16 @@ import java.io.File
 
 class AddRecipeDialogFragment : DialogFragment() {
 
+    interface OnRecipeAddedListener {
+        fun onRecipeAdded(recipe: Recipe)
+    }
+
+    private var listener: OnRecipeAddedListener? = null
+
+    fun setOnRecipeAddedListener(listener: OnRecipeAddedListener) {
+        this.listener = listener
+    }
+
     private val ingredients = mutableListOf<String>()
     private lateinit var ingredientsAdapter: IngredientsAdapter
 
@@ -74,6 +84,7 @@ class AddRecipeDialogFragment : DialogFragment() {
                     preparation = preparation
                 )
                 saveRecipe(newRecipe)
+                listener?.onRecipeAdded(newRecipe) // Callback auslösen
                 dismiss()
             }
         }

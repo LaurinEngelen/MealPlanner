@@ -62,6 +62,13 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
     private fun showAddRecipeDialog() {
         val dialog = AddRecipeDialogFragment()
+        dialog.setOnRecipeAddedListener(object : AddRecipeDialogFragment.OnRecipeAddedListener {
+            override fun onRecipeAdded(recipe: Recipe) {
+                val recipes = loadRecipes()
+                val filteredRecipes = filterRecipes(recipes)
+                adapter.updateRecipes(filteredRecipes) // RecyclerView aktualisieren
+            }
+        })
         dialog.show(parentFragmentManager, "AddRecipeDialog")
     }
 
