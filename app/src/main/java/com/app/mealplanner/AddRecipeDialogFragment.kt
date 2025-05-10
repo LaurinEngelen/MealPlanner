@@ -49,6 +49,10 @@ class AddRecipeDialogFragment : DialogFragment() {
         val nameInput: EditText = view.findViewById(R.id.inputRecipeTitle)
         val preparationInput: EditText = view.findViewById(R.id.inputDescription)
         val newIngredientInput: EditText = view.findViewById(R.id.inputNewIngredient)
+        val servingsInput: EditText = view.findViewById(R.id.inputServings)
+        val prepHoursInput: EditText = view.findViewById(R.id.inputPrepHours)
+        val prepMinutesInput: EditText = view.findViewById(R.id.inputPrepMinutes)
+        val notesInput: EditText = view.findViewById(R.id.inputNotes)
         val saveButton: Button = view.findViewById(R.id.buttonAddRecipe)
         val ingredientsRecyclerView: RecyclerView = view.findViewById(R.id.ingredientsRecyclerView)
 
@@ -60,11 +64,11 @@ class AddRecipeDialogFragment : DialogFragment() {
         // Add ingredient on Enter key press
         newIngredientInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
-                val ingredientText = newIngredientInput.text.toString()
+                val ingredientText = newIngredientInput.text.toString().trim()
                 if (ingredientText.isNotEmpty()) {
-                    ingredients.add(ingredientText)
-                    ingredientsAdapter.notifyDataSetChanged()
-                    newIngredientInput.text.clear()
+                    ingredients.add(ingredientText) // Zutat zur Liste hinzufügen
+                    ingredientsAdapter.notifyDataSetChanged() // RecyclerView aktualisieren
+                    newIngredientInput.text.clear() // Eingabefeld leeren
                 }
                 true // Event wurde verarbeitet
             } else {
@@ -75,16 +79,20 @@ class AddRecipeDialogFragment : DialogFragment() {
         saveButton.setOnClickListener {
             val name = nameInput.text.toString()
             val preparation = preparationInput.text.toString()
+            val servings = servingsInput.text.toString().toIntOrNull() ?: 0
+            val prepTime = "${prepHoursInput.text}:${prepMinutesInput.text}"
+            val notes = notesInput.text.toString()
 
             if (name.isNotEmpty() && ingredients.isNotEmpty() && preparation.isNotEmpty()) {
                 val newRecipe = Recipe(
                     id = System.currentTimeMillis().toInt(),
                     name = name,
                     ingredients = ingredients,
-                    preparation = preparation
+                    preparation = preparation,
+                    image = null // Optional: Add image handling if needed
                 )
                 saveRecipe(newRecipe)
-                listener?.onRecipeAdded(newRecipe) // Callback auslösen
+                listener?.onRecipeAdded(newRecipe)
                 dismiss()
             }
         }
@@ -102,6 +110,4 @@ class AddRecipeDialogFragment : DialogFragment() {
         recipes.add(recipe)
         recipesFile.writeText(Gson().toJson(recipes))
     }
-
-
 }

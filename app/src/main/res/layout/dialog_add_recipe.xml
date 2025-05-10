@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
+    android:textColor="@android:color/white"
     android:padding="16dp">
 
     <LinearLayout
@@ -36,18 +37,34 @@
         </LinearLayout>
 
         <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Title"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
         <EditText
             android:id="@+id/inputRecipeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Recipe Title"
             android:inputType="text"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
         <!-- Image Picker -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Image"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
         <Button
             android:id="@+id/buttonUploadImage"
             android:layout_width="match_parent"
@@ -58,6 +75,14 @@
             android:textColor="@android:color/white" />
 
         <!-- Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
         <EditText
             android:id="@+id/inputDescription"
             android:layout_width="match_parent"
@@ -65,7 +90,7 @@
             android:hint="Description"
             android:inputType="textMultiLine"
             android:lines="4"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
@@ -84,7 +109,8 @@
             android:id="@+id/ingredientsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@android:color/darker_gray"
+            android:textColor="@android:color/white"
+            android:background="@drawable/edit_text_background"
             android:layout_marginTop="8dp" />
 
         <EditText
@@ -94,11 +120,12 @@
             android:hint="Add more ingredients"
             android:inputType="text"
             android:imeOptions="actionDone"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
+
         <!-- Instructions -->
         <TextView
             android:layout_width="match_parent"
@@ -115,24 +142,41 @@
             android:hint="Add instructions"
             android:inputType="textMultiLine"
             android:lines="4"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
-        <!-- Additional Fields -->
+        <!-- Servings -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Servings"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
         <EditText
             android:id="@+id/inputServings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Servings"
             android:inputType="number"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/edit_text_background"
             android:padding="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
+
+        <!-- Prep Time -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Preparation Time"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -147,7 +191,7 @@
                 android:layout_weight="1"
                 android:hint="Prep Hours"
                 android:inputType="number"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/edit_text_background"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
@@ -159,44 +203,21 @@
                 android:layout_weight="1"
                 android:hint="Prep Minutes"
                 android:inputType="number"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/edit_text_background"
                 android:padding="8dp"
                 android:layout_marginStart="8dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
         </LinearLayout>
 
-        <LinearLayout
+        <!-- Notes -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <EditText
-                android:id="@+id/inputCookHours"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Cook Hours"
-                android:inputType="number"
-                android:background="@android:color/darker_gray"
-                android:padding="8dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
-
-            <EditText
-                android:id="@+id/inputCookMinutes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Cook Minutes"
-                android:inputType="number"
-                android:background="@android:color/darker_gray"
-                android:padding="8dp"
-                android:layout_marginStart="8dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
-        </LinearLayout>
+            android:text="Notes"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
 
         <EditText
             android:id="@+id/inputNotes"
@@ -205,19 +226,7 @@
             android:hint="Notes (Optional)"
             android:inputType="textMultiLine"
             android:lines="3"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
-
-        <EditText
-            android:id="@+id/inputSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Source"
-            android:inputType="text"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"

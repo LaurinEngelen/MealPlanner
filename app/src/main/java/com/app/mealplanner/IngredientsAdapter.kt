@@ -2,24 +2,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
 
-class IngredientsAdapter(private val ingredients: MutableList<String>) :
-    RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder>() {
+class IngredientsAdapter(private val ingredients: List<String>) :
+    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
-    inner class IngredientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ingredientText: TextView = itemView.findViewById(R.id.ingredientText)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textView: TextView = itemView.findViewById(R.id.ingredientText)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_ingredient, parent, false)
-        return IngredientViewHolder(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
-        holder.ingredientText.text = ingredients[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val ingredient = ingredients[position]
+        holder.textView.text = ingredient
+        holder.textView.setTextColor(
+            ContextCompat.getColor(holder.itemView.context, android.R.color.white)
+        )
     }
 
     override fun getItemCount(): Int = ingredients.size
