@@ -1,109 +1,111 @@
 package com.app.mealplanner
 
-import android.graphics.Rect
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.app.mealplanner.databinding.FragmentRecipesBinding
+import com.app.mealplanner.model.Recipe
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.File
 
-class RecipesFragment : Fragment() {
-    private var binding: FragmentRecipesBinding? = null
-    private var recipeAdapter: RecipeAdapter? = null
-    private var recipes: MutableList<Recipe> = ArrayList()
-    private var i = 0
+class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentRecipesBinding.inflate(inflater, container, false)
-        setupRecyclerView()
-        return binding!!.root
-    }
+    private lateinit var adapter: RecipeAdapter
+    private val swipedRecipes = mutableListOf<Int>() // Session-based list
 
-    private fun setupRecyclerView() {
-        recipes = createRecipes().toMutableList()
-        recipeAdapter = RecipeAdapter(recipes)
-        binding!!.recyclerViewRecipes.adapter = recipeAdapter
-        binding!!.recyclerViewRecipes.layoutManager = LinearLayoutManager(context)
-        binding!!.recyclerViewRecipes.addItemDecoration(MarginItemDecoration(16))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val swipeHandler: ItemTouchHelper.SimpleCallback = object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewRecipes)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        adapter = RecipeAdapter(mutableListOf<Recipe>()) { recipeId ->
+            val recipe = loadRecipes().find { it.id.toString() == recipeId }
+            if (recipe != null) {
+                onRecipeSwiped(recipe)
+            }
+        }
+        recyclerView.adapter = adapter
+
+        val recipes = loadRecipes()
+        val filteredRecipes = filterRecipes(recipes)
+        adapter.updateRecipes(filteredRecipes)
+
+        // Add swipe functionality
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                return false
+                return false // No move functionality needed
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position: Int = viewHolder.bindingAdapterPosition
-                val swipedRecipe = recipes[position]
-                when (direction) {
-                    ItemTouchHelper.LEFT -> {
-                        Toast.makeText(
-                            context,
-                            "Disliked: " + swipedRecipe.name,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        recipeAdapter!!.removeRecipe(position)
-                    }
-
-                    ItemTouchHelper.RIGHT -> {
-                        Toast.makeText(context, "Liked: " + swipedRecipe.name, Toast.LENGTH_SHORT)
-                            .show()
-                        recipeAdapter!!.removeRecipe(position)
-                        FavoritesRepository.getInstance().addFavoriteRecipe(swipedRecipe)
-                    }
-                }
-                if (recipes.isEmpty()) {
-                    val ingredients: MutableList<String> = ArrayList()
-                    ingredients.add("Zutat $i")
-                    val newRecipe = Recipe(
-                        i, "Rezept $i", null, ingredients,
-                        "Zubereitungstext $i"
-                    )
-                    recipeAdapter!!.addRecipe(newRecipe)
-                    i++
-                }
+                val position = viewHolder.adapterPosition
+                val recipe = adapter.getRecipes()[position]
+                onRecipeSwiped(recipe) // Handle swipe action
             }
-        }
-
-        val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(binding!!.recyclerViewRecipes)
+        })
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    private fun createRecipes(): List<Recipe> {
-        val list: MutableList<Recipe> = ArrayList()
-        val ingredients = listOf("Zutat 1", "Zutat 2", "Zutat 3")
-        val preparation = "Schritt 1...\nSchritt 2...\nSchritt 3..."
-        list.add(Recipe(0, "Rezept 1", null, ingredients, preparation))
-        list.add(Recipe(1, "Rezept 2", null, ingredients, preparation))
-        return list
+    private fun loadRecipes(): MutableList<Recipe> {
+        val recipesFile = requireContext().assets.open("recipes.json").bufferedReader().use { it.readText() }
+        val type = object : TypeToken<MutableList<Recipe>>() {}.type
+        return Gson().fromJson<MutableList<Recipe>>(recipesFile, type)
     }
-}
 
-class MarginItemDecoration(private val margin: Int) : RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        if (parent.getChildAdapterPosition(view) == 0) {
-            outRect.top = margin
+    private fun loadFavorites(): MutableList<Recipe> {
+        val favoritesFile = File(requireContext().filesDir, "favorites.json")
+        return if (favoritesFile.exists()) {
+            val json = favoritesFile.readText()
+            val type = object : TypeToken<MutableList<Recipe>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            mutableListOf()
         }
-        outRect.left = margin
-        outRect.right = margin
-        outRect.bottom = margin
+    }
+
+    private fun filterRecipes(recipes: MutableList<Recipe>): MutableList<Recipe> {
+        val favoriteIds = loadFavorites().map { it.id }
+        return recipes.filter { it.id !in swipedRecipes && it.id !in favoriteIds }.toMutableList()
+    }
+
+    private fun onRecipeSwiped(recipe: Recipe) {
+        swipedRecipes.add(recipe.id) // Hide recipe for the session
+        val updatedRecipes = filterRecipes(loadRecipes())
+        adapter.updateRecipes(updatedRecipes)
+
+        // Add the swiped recipe to favorites
+        val favorites = loadFavorites()
+        if (!favorites.any { it.id == recipe.id }) {
+            favorites.add(recipe)
+            saveFavorites(favorites)
+        }
+    }
+
+    private fun saveFavorites(favorites: MutableList<Recipe>) {
+        val favoritesFile = File(requireContext().filesDir, "favorites.json")
+        val json = Gson().toJson(favorites)
+        favoritesFile.writeText(json)
+    }
+
+    fun addFavorite(recipe: Recipe) {
+        val favorites = loadFavorites()
+        if (!favorites.any { it.id == recipe.id }) {
+            favorites.add(recipe)
+            saveFavorites(favorites) // Save updated favorites
+        }
+    }
+
+    fun removeFavorite(recipe: Recipe) {
+        val favorites = loadFavorites()
+        if (favorites.any { it.id == recipe.id }) {
+            favorites.removeIf { it.id == recipe.id }
+            saveFavorites(favorites) // Save updated favorites
+        }
     }
 }

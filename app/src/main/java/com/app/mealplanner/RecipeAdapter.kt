@@ -6,8 +6,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.databinding.RecipeItemBinding
+import com.app.mealplanner.model.Recipe
 
-class RecipeAdapter(private val recipes: MutableList<Recipe>) :
+class RecipeAdapter(private var recipes: MutableList<Recipe>,
+                    private val onSwipe: (String) -> Unit) :
     RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     class RecipeViewHolder(private val binding: RecipeItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -26,18 +28,13 @@ class RecipeAdapter(private val recipes: MutableList<Recipe>) :
         val currentRecipe = recipes[position]
         holder.nameTextView.text = currentRecipe.name
 
-        // Bild laden (wenn vorhanden)
         if (currentRecipe.image != null) {
-            holder.recipeImage.setImageResource(currentRecipe.image)
+            holder.recipeImage.setImageResource(currentRecipe.image as Int)
         } else {
-            // Hier könntest du ein Standardbild setzen, falls kein Bild vorhanden ist
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
-        // Zutatenliste anzeigen
         holder.ingredientsList.text = currentRecipe.ingredients.joinToString("\n")
-
-        // Zubereitung anzeigen
         holder.preparationText.text = currentRecipe.preparation
     }
 
@@ -51,5 +48,26 @@ class RecipeAdapter(private val recipes: MutableList<Recipe>) :
     fun addRecipe(recipe: Recipe) {
         recipes.add(recipe)
         notifyItemInserted(recipes.size - 1)
+    }
+
+    fun updateRecipes(newRecipes: MutableList<Recipe>) {
+        recipes = newRecipes
+        notifyDataSetChanged()
+    }
+
+    fun removeRecipeAt(position: Int) {
+        recipes.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun getRecipes(): MutableList<Recipe> {
+        return recipes
+    }
+
+    fun onItemSwiped(position: Int) {
+        val recipeId = recipes[position].id.toString()
+        onSwipe(recipeId)
+        recipes.removeAt(position)
+        notifyItemRemoved(position)
     }
 }

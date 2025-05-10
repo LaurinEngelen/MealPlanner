@@ -1,0 +1,281 @@
+[
+  {
+    "id": 1,
+    "name": "Spaghetti Bolognese",
+    "ingredients": ["Spaghetti", "Tomato Sauce", "Ground Beef"],
+    "preparation": "Cook pasta, prepare sauce, mix together.",
+    "image": null
+  },
+  {
+    "id": 2,
+    "name": "Caesar Salad",
+    "ingredients": ["Lettuce", "Croutons", "Caesar Dressing"],
+    "preparation": "Mix all ingredients.",
+    "image": null
+  },
+  {
+    "id": 3,
+    "name": "Chicken Curry",
+    "ingredients": ["Chicken", "Curry Powder", "Coconut Milk"],
+    "preparation": "Cook chicken, add curry powder and coconut milk.",
+    "image": null
+  },
+  {
+    "id": 4,
+    "name": "Beef Tacos",
+    "ingredients": ["Taco Shells", "Ground Beef", "Lettuce", "Tomato"],
+    "preparation": "Cook beef, fill taco shells with beef and toppings.",
+    "image": null
+  },
+  {
+    "id": 5,
+    "name": "Vegetable Stir Fry",
+    "ingredients": [
+      "Mixed Vegetables",
+      "Soy Sauce",
+      "Rice"
+    ],
+    "preparation": "Stir fry vegetables, serve with rice.",
+    "image": null
+  },
+  {
+    "id": 6,
+    "name": "Pancakes",
+    "ingredients": [
+      "Flour",
+      "Milk",
+      "Eggs",
+      "Sugar"
+    ],
+    "preparation": "Mix ingredients, cook in a pan until golden brown.",
+    "image": null
+  },
+  {
+    "id": 7,
+    "name": "Grilled Cheese Sandwich",
+    "ingredients": [
+      "Bread",
+      "Cheese",
+      "Butter"
+    ],
+    "preparation": "Butter bread, add cheese, grill until golden.",
+    "image": null
+  },
+  {
+    "id": 8,
+    "name": "Tomato Soup",
+    "ingredients": [
+      "Tomatoes",
+      "Onion",
+      "Garlic",
+      "Cream"
+    ],
+    "preparation": "Cook tomatoes with onion and garlic, blend, add cream.",
+    "image": null
+  },
+  {
+    "id": 9,
+    "name": "Fried Rice",
+    "ingredients": [
+      "Rice",
+      "Vegetables",
+      "Soy Sauce",
+      "Eggs"
+    ],
+    "preparation": "Stir fry rice with vegetables and soy sauce, add eggs.",
+    "image": null
+  },
+  {
+    "id": 10,
+    "name": "Lasagna",
+    "ingredients": [
+      "Lasagna Sheets",
+      "Tomato Sauce",
+      "Cheese",
+      "Ground Beef"
+    ],
+    "preparation": "Layer ingredients, bake until golden brown.",
+    "image": null
+  },
+  {
+    "id": 11,
+    "name": "Greek Salad",
+    "ingredients": [
+      "Cucumber",
+      "Tomato",
+      "Feta Cheese",
+      "Olives"
+    ],
+    "preparation": "Chop ingredients, mix with olive oil and herbs.",
+    "image": null
+  },
+  {
+    "id": 12,
+    "name": "Omelette",
+    "ingredients": [
+      "Eggs",
+      "Milk",
+      "Cheese",
+      "Vegetables"
+    ],
+    "preparation": "Whisk eggs with milk, cook in a pan, add fillings.",
+    "image": null
+  },
+  {
+    "id": 13,
+    "name": "BBQ Chicken Wings",
+    "ingredients": [
+      "Chicken Wings",
+      "BBQ Sauce",
+      "Spices"
+    ],
+    "preparation": "Marinate wings, bake or grill until cooked.",
+    "image": null
+  },
+  {
+    "id": 14,
+    "name": "Caprese Salad",
+    "ingredients": [
+      "Tomato",
+      "Mozzarella",
+      "Basil",
+      "Olive Oil"
+    ],
+    "preparation": "Slice tomato and mozzarella, layer with basil, drizzle with olive oil.",
+    "image": null
+  },
+  {
+    "id": 15,
+    "name": "Stuffed Bell Peppers",
+    "ingredients": [
+      "Bell Peppers",
+      "Rice",
+      "Ground Beef",
+      "Tomato Sauce"
+    ],
+    "preparation": "Stuff peppers with mixture, bake until tender.",
+    "image": null
+  },
+  {
+    "id": 16,
+    "name": "Mac and Cheese",
+    "ingredients": [
+      "Macaroni",
+      "Cheese",
+      "Milk",
+      "Butter"
+    ],
+    "preparation": "Cook macaroni, mix with cheese sauce.",
+    "image": null
+  },
+  {
+    "id": 17,
+    "name": "Chicken Alfredo",
+    "ingredients": [
+      "Pasta",
+      "Chicken",
+      "Cream",
+      "Parmesan"
+    ],
+    "preparation": "Cook pasta, prepare Alfredo sauce, mix with chicken.",
+    "image": null
+  },
+  {
+    "id": 18,
+    "name": "Vegetable Soup",
+    "ingredients": [
+      "Mixed Vegetables",
+      "Broth",
+      "Herbs"
+    ],
+    "preparation": "Cook vegetables in broth, season with herbs.",
+    "image": null
+  },
+  {
+    "id": 19,
+    "name": "Fish Tacos",
+    "ingredients": [
+      "Taco Shells",
+      "Fish Fillets",
+      "Cabbage",
+      "Salsa"
+    ],
+    "preparation": "Cook fish, assemble tacos with toppings.",
+    "image": null
+  },
+  {
+    "id": 20,
+    "name": "Chocolate Cake",
+    "ingredients": [
+      "Flour",
+      "Cocoa Powder",
+      "Sugar",
+      "Eggs",
+      "Butter"
+    ],
+    "preparation": "Mix ingredients, bake until cooked through.",
+    "image": null
+  },
+  {
+    "id": 21,
+    "name": "Shrimp Scampi",
+    "ingredients": [
+      "Shrimp",
+      "Garlic",
+      "Butter",
+      "Pasta"
+    ],
+    "preparation": "Cook shrimp in garlic butter, serve with pasta.",
+    "image": null
+  },
+  {
+    "id": 22,
+    "name": "Quiche",
+    "ingredients": [
+      "Eggs",
+      "Milk",
+      "Cheese",
+      "Pastry Crust"
+    ],
+    "preparation": "Mix filling, pour into crust, bake until set.",
+    "image": null
+  },
+  {
+    "id": 23,
+    "name": "Beef Stew",
+    "ingredients": [
+      "Beef",
+      "Potatoes",
+      "Carrots",
+      "Broth"
+    ],
+    "preparation": "Simmer beef and vegetables in broth until tender.",
+    "image": null
+  },
+  {
+    "id": 24,
+    "name": "Cobb Salad",
+    "ingredients": [
+      "Lettuce",
+      "Chicken",
+      "Bacon",
+      "Eggs",
+      "Avocado"
+    ],
+    "preparation": "Chop ingredients, arrange on a plate, serve with dressing.",
+    "image": null
+  },
+  {
+    "id": 25,
+    "name": "Banana Bread",
+    "ingredients": [
+      "Bananas",
+      "Flour",
+      "Sugar",
+      "Eggs",
+      "Butter"
+    ],
+    "preparation": "Mix ingredients, bake until golden brown.",
+    "image": null
+  }
+]

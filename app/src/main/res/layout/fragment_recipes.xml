@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".RecipesFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.app.mealplanner.NonScrollableRecyclerView
         android:id="@+id/recyclerViewRecipes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/recipe_item" />
+        android:layout_height="wrap_content"
+        android:overScrollMode="never" />
+
 
 </FrameLayout>

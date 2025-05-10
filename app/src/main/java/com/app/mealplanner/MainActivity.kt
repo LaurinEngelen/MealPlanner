@@ -2,6 +2,7 @@ package com.app.mealplanner
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -15,22 +16,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflate the layout using ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up the Toolbar
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        // Set up the BottomNavigationView
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                com.app.mealplanner.R.id.navigation_recipes -> {
+                R.id.navigation_recipes -> {
                     replaceFragment(RecipesFragment())
                 }
-                com.app.mealplanner.R.id.navigation_favorites -> {
+                R.id.navigation_favorites -> {
                     replaceFragment(FavoritesFragment())
                 }
             }
             true
         }
 
-        // Initial fragment load
+        // Load the initial fragment
         if (savedInstanceState == null) {
             replaceFragment(RecipesFragment())
         }
@@ -39,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(com.app.mealplanner.R.id.fragment_container, fragment)
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
     }
 }

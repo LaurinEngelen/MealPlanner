@@ -1,8 +1,10 @@
-import com.app.mealplanner.Recipe
+package com.app.mealplanner.repository
+
+import com.app.mealplanner.model.Recipe
 
 class FavoritesRepository {
 
-    private val favoriteRecipes: MutableList<Recipe> = ArrayList()
+    private val favoriteRecipes: MutableList<Recipe> = ArrayList<Recipe>()
     private val observers: MutableList<Observer> = ArrayList()
 
     fun addFavoriteRecipe(recipe: Recipe) {
