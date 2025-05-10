@@ -6,7 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.model.Recipe
 import com.google.gson.Gson
@@ -15,14 +15,14 @@ import java.io.File
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
-    private lateinit var adapter: RecipeAdapter
+    private lateinit var adapter: FavoritesRecipeAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewFavorites)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = RecipeAdapter(mutableListOf()) { /* No-op for FavoritesFragment */ }
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2) // 2 items per Reihe
+        adapter = FavoritesRecipeAdapter(mutableListOf()) { /* No-op for FavoritesFragment */ }
         recyclerView.adapter = adapter
 
         val favorites = loadFavorites()
