@@ -1,5 +1,6 @@
 package com.app.mealplanner
 
+import AddRecipeDialogFragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -33,6 +34,12 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
         val filteredRecipes = filterRecipes(recipes)
         adapter.updateRecipes(filteredRecipes)
 
+        // Floating Action Button
+        val fabAddRecipe: View = view.findViewById(R.id.fabAddRecipe)
+        fabAddRecipe.setOnClickListener {
+            showAddRecipeDialog()
+        }
+
         // Add swipe functionality
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
@@ -50,6 +57,11 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             }
         })
         itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun showAddRecipeDialog() {
+        val dialog = AddRecipeDialogFragment()
+        dialog.show(parentFragmentManager, "AddRecipeDialog")
     }
 
     private fun loadRecipes(): MutableList<Recipe> {

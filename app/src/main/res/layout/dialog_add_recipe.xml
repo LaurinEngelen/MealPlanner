@@ -1,0 +1,236 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- AppBar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:background="@android:color/black">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_revert"
+                android:contentDescription="Back"
+                android:padding="8dp"
+                android:tint="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add a recipe"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+        <!-- Title -->
+        <EditText
+            android:id="@+id/inputRecipeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Recipe Title"
+            android:inputType="text"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <!-- Image Picker -->
+        <Button
+            android:id="@+id/buttonUploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Image"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white" />
+
+        <!-- Description -->
+        <EditText
+            android:id="@+id/inputDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <!-- Ingredients -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingredients"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ingredientsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/inputNewIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add more ingredients"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+        <!-- Instructions -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Instructions"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/inputInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add instructions"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <!-- Additional Fields -->
+        <EditText
+            android:id="@+id/inputServings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Servings"
+            android:inputType="number"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/inputPrepHours"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Prep Hours"
+                android:inputType="number"
+                android:background="@android:color/darker_gray"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <EditText
+                android:id="@+id/inputPrepMinutes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Prep Minutes"
+                android:inputType="number"
+                android:background="@android:color/darker_gray"
+                android:padding="8dp"
+                android:layout_marginStart="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/inputCookHours"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Cook Hours"
+                android:inputType="number"
+                android:background="@android:color/darker_gray"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <EditText
+                android:id="@+id/inputCookMinutes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Cook Minutes"
+                android:inputType="number"
+                android:background="@android:color/darker_gray"
+                android:padding="8dp"
+                android:layout_marginStart="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/inputNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Notes (Optional)"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <EditText
+            android:id="@+id/inputSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Source"
+            android:inputType="text"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <!-- Add Recipe Button -->
+        <Button
+            android:id="@+id/buttonAddRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Recipe"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>
