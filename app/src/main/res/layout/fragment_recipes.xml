@@ -9,8 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRecipes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="72dp" />
+        android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddRecipe"
@@ -21,6 +20,6 @@
         android:layout_margin="16dp"
         android:contentDescription="@string/add_recipe"
         app:srcCompat="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/design_default_color_primary" />
+        app:backgroundTint="@color/custom_dark_orange"/>
 
 </RelativeLayout>

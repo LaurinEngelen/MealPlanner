@@ -35,10 +35,7 @@ class FavoritesRecipeAdapter(
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
-        // Ensure `cookingTime` exists in the Recipe model
         holder.recipeTime.text = "${currentRecipe.cookingTime} min"
-
-        // Replace `ic_timer` with an existing drawable if necessary
         holder.recipeIcon.setImageResource(R.drawable.ic_timer)
     }
 

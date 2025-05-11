@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Set up the Toolbar
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+
 
         // Set up the BottomNavigationView
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
