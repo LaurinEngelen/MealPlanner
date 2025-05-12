@@ -51,7 +51,17 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         return try {
             val json = requireContext().assets.open("favorites.json").bufferedReader().use { it.readText() }
             val type = object : TypeToken<MutableList<Recipe>>() {}.type
-            Gson().fromJson(json, type)
+            val favorites: MutableList<Recipe> = Gson().fromJson(json, type)
+
+            // Sicherstellen, dass alle Rezepte eine ID haben
+            var maxId = favorites.maxOfOrNull { it.id } ?: 0
+            favorites.forEach { recipe ->
+                if (recipe.id == 0) { // Falls ein Rezept keine ID hat
+                    maxId++
+                    recipe.id = maxId
+                }
+            }
+            favorites
         } catch (e: Exception) {
             println("Error loading favorites: ${e.message}")
             mutableListOf()

@@ -16,7 +16,11 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
         val nameTextView: TextView = binding.recipeName
         val recipeImage: ImageView = binding.recipeImage
         val ingredientsList: TextView = binding.ingredientsList
-        val preparationText: TextView = binding.preparationText
+        val preparationList: TextView = binding.preparationList
+        val recipeDescription: TextView = binding.recipeDescription
+        val servings: TextView = binding.servings
+        val preparationTime: TextView = binding.preparationTime
+        val notes: TextView = binding.notes
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -34,8 +38,12 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
-        holder.ingredientsList.text = currentRecipe.ingredients.joinToString("\n")
-        holder.preparationText.text = currentRecipe.preparation
+        holder.ingredientsList.text = currentRecipe.ingredients?.joinToString("\n") ?: ""
+        holder.preparationList.text = currentRecipe.preparations?.joinToString("\n") ?: ""
+        holder.servings.text = "Servings: ${currentRecipe.servings ?: "Servings: N/A"}"
+        holder.preparationTime.text = "Preparation Time: ${currentRecipe.prepTime ?: "Preparation Time: N/A"}"
+        holder.notes.text = currentRecipe.notes ?: ""
+        holder.recipeDescription.text = currentRecipe.description ?: "No description available"
     }
 
     override fun getItemCount(): Int = recipes.size

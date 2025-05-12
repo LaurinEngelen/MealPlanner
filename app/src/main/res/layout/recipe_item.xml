@@ -111,7 +111,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
 
         <TextView
-            android:id="@+id/preparationText"
+            android:id="@+id/preparationList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -120,6 +120,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/preparationLabel" />
+
+        <TextView
+            android:id="@+id/notesLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Notes:"
+            android:textStyle="bold"
+            android:textColor="@color/cardTextColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preparationList" />
 
         <TextView
             android:id="@+id/notes"
@@ -131,7 +143,7 @@
             android:textColor="@color/cardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/preparationText" />
+            app:layout_constraintTop_toBottomOf="@+id/notesLabel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

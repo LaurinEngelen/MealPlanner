@@ -37,7 +37,7 @@ class FavoritesRecipeAdapter(
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
-        holder.recipeTime.text = "${currentRecipe.cookingTime} min"
+        holder.recipeTime.text = "${currentRecipe.prepTime} min"
         holder.recipeIcon.setImageResource(R.drawable.ic_timer)
         holder.btnRemoveFavorite.setOnClickListener {
             onRemoveClick(currentRecipe)

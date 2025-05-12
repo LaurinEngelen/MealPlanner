@@ -1,10 +1,13 @@
 package com.app.mealplanner.model
 
 data class Recipe(
-    val id: Int,
+    var id: Int,
     val name: String,
+    val description: String? = null,
     val ingredients: List<String>,
-    val preparation: String,
+    val preparations: List<String>,
     val image: String? = null,
-    val cookingTime: Int? = null
+    val servings: Int? = null,
+    val prepTime: String? = null,
+    val notes: String? = null
 )

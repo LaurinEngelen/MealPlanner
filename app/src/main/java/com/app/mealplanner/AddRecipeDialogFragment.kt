@@ -28,6 +28,9 @@ class AddRecipeDialogFragment : DialogFragment() {
     private val ingredients = mutableListOf<String>()
     private lateinit var ingredientsAdapter: IngredientsAdapter
 
+    private val preparations = mutableListOf<String>()
+    private lateinit var preparationsAdapter: PreparationsAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,6 +58,9 @@ class AddRecipeDialogFragment : DialogFragment() {
         val notesInput: EditText = view.findViewById(R.id.inputNotes)
         val saveButton: Button = view.findViewById(R.id.buttonAddRecipe)
         val ingredientsRecyclerView: RecyclerView = view.findViewById(R.id.ingredientsRecyclerView)
+        val newPreparationInput: EditText = view.findViewById(R.id.inputNewInstruction)
+        val preparationsRecyclerView: RecyclerView = view.findViewById(R.id.instructionsRecyclerView)
+
 
         val backButton: View = view.findViewById(R.id.backButton) // Replace with the actual ID of the back symbol
         backButton.setOnClickListener {
@@ -66,16 +72,36 @@ class AddRecipeDialogFragment : DialogFragment() {
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         ingredientsRecyclerView.adapter = ingredientsAdapter
 
+        preparationsAdapter = PreparationsAdapter(preparations)
+        preparationsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        preparationsRecyclerView.adapter = preparationsAdapter
+
         // Add ingredient on Enter key press
         newIngredientInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
                 val ingredientText = newIngredientInput.text.toString().trim()
                 if (ingredientText.isNotEmpty()) {
-                    ingredients.add(ingredientText) // Zutat zur Liste hinzufügen
-                    ingredientsAdapter.notifyDataSetChanged() // RecyclerView aktualisieren
-                    newIngredientInput.text.clear() // Eingabefeld leeren
+                    ingredients.add(ingredientText) // Add ingredient to the list
+                    ingredientsAdapter.notifyDataSetChanged() // Update RecyclerView
+                    ingredientsRecyclerView.scrollToPosition(ingredients.size - 1) // Scroll to the last item
+                    newIngredientInput.text.clear() // Clear input field
                 }
-                true // Event wurde verarbeitet
+                true // Event handled
+            } else {
+                false
+            }
+        }
+
+        newPreparationInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                val preparationText = newPreparationInput.text.toString().trim()
+                if (preparationText.isNotEmpty()) {
+                    preparations.add(preparationText) // Add preparation step to the list
+                    preparationsAdapter.notifyDataSetChanged() // Update RecyclerView
+                    preparationsRecyclerView.scrollToPosition(preparations.size - 1) // Scroll to the last item
+                    newPreparationInput.text.clear() // Clear input field
+                }
+                true // Event handled
             } else {
                 false
             }
@@ -83,18 +109,20 @@ class AddRecipeDialogFragment : DialogFragment() {
 
         saveButton.setOnClickListener {
             val name = nameInput.text.toString()
-            val preparation = preparationInput.text.toString()
             val servings = servingsInput.text.toString().toIntOrNull() ?: 0
             val prepTime = "${prepHoursInput.text}:${prepMinutesInput.text}"
             val notes = notesInput.text.toString()
 
-            if (name.isNotEmpty() && ingredients.isNotEmpty() && preparation.isNotEmpty()) {
+            if (name.isNotEmpty() && ingredients.isNotEmpty() && preparations.isNotEmpty()) {
                 val newRecipe = Recipe(
                     id = System.currentTimeMillis().toInt(),
                     name = name,
                     ingredients = ingredients,
-                    preparation = preparation,
-                    image = null // Optional: Add image handling if needed
+                    preparations = preparations,
+                    image = null, // Replace with actual image handling if needed
+                    servings = servings,
+                    prepTime = prepTime,
+                    notes = notes
                 )
                 saveRecipe(newRecipe)
                 listener?.onRecipeAdded(newRecipe)
@@ -112,7 +140,12 @@ class AddRecipeDialogFragment : DialogFragment() {
         } else {
             mutableListOf()
         }
-        recipes.add(recipe)
+
+        // Generate a new ID based on the highest existing ID
+        val newId = (recipes.maxOfOrNull { it.id } ?: 0) + 1
+        val recipeWithId = recipe.copy(id = newId)
+
+        recipes.add(recipeWithId)
         recipesFile.writeText(Gson().toJson(recipes))
     }
 }
