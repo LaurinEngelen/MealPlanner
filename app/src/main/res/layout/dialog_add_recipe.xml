@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
+    android:background="@color/dialogBackgroundColor"
     android:padding="16dp">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="8dp"
-            android:background="@android:color/black">
+            android:background="@color/dialogBackgroundColor">
 
             <ImageView
                 android:id="@+id/backButton"

@@ -1,4 +1,5 @@
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +43,9 @@ class AddRecipeDialogFragment : DialogFragment() {
         super.onStart()
         dialog?.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent) // Transparent background
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,6 +133,7 @@ class AddRecipeDialogFragment : DialogFragment() {
         }
     }
 
+
     private fun saveRecipe(recipe: Recipe) {
         val recipesFile = File(requireContext().filesDir, "recipes.json")
         val recipes: MutableList<Recipe> = if (recipesFile.exists()) {
@@ -141,11 +144,12 @@ class AddRecipeDialogFragment : DialogFragment() {
             mutableListOf()
         }
 
-        // Generate a new ID based on the highest existing ID
+        // Generiere eine neue ID basierend auf der höchsten existierenden ID
         val newId = (recipes.maxOfOrNull { it.id } ?: 0) + 1
         val recipeWithId = recipe.copy(id = newId)
 
         recipes.add(recipeWithId)
         recipesFile.writeText(Gson().toJson(recipes))
+
     }
 }
