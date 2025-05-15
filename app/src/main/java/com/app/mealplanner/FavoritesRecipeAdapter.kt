@@ -11,7 +11,8 @@ import com.app.mealplanner.model.Recipe
 class FavoritesRecipeAdapter(
     private var recipes: MutableList<Recipe>,
     private val onSwipe: (String) -> Unit,
-    private val onRemoveClick: (Recipe) -> Unit
+    private val onRemoveClick: (Recipe) -> Unit,
+    private val onClick: (Recipe) -> Unit // Add onClick callback
 ) : RecyclerView.Adapter<FavoritesRecipeAdapter.FavoritesRecipeViewHolder>() {
 
     class FavoritesRecipeViewHolder(private val binding: NewRecipeItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -19,7 +20,7 @@ class FavoritesRecipeAdapter(
         val recipeTitle: TextView = binding.recipeTitle
         val recipeTime: TextView = binding.recipeTime
         val recipeIcon: ImageView = binding.recipeIcon
-        val btnRemoveFavorite: ImageView = itemView.findViewById(R.id.btnRemoveFavorite)
+        val btnRemoveFavorite: ImageView = binding.btnRemoveFavorite
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesRecipeViewHolder {
@@ -41,7 +42,10 @@ class FavoritesRecipeAdapter(
         holder.recipeIcon.setImageResource(R.drawable.ic_timer)
         holder.btnRemoveFavorite.setOnClickListener {
             onRemoveClick(currentRecipe)
-        }// Notify the fragment to handle the removal
+        }
+        holder.itemView.setOnClickListener {
+            onClick(currentRecipe) // Trigger the callback with the clicked recipe
+        }
     }
 
     override fun getItemCount(): Int = recipes.size

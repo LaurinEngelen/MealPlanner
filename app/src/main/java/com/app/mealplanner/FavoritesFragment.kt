@@ -22,8 +22,12 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewFavorites)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter = FavoritesRecipeAdapter(mutableListOf(), onSwipe = {}) { recipe ->
-            removeFavorite(recipe)
+        adapter = FavoritesRecipeAdapter(
+            mutableListOf(),
+            onSwipe = {}, // Handle swipe if needed
+            onRemoveClick = { recipe -> removeFavorite(recipe) } // Handle remove click
+        ) { recipe ->
+            openRecipeDetail(recipe)
         }
         recyclerView.adapter = adapter
 
@@ -45,6 +49,14 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             favoritesFile.writeText(Gson().toJson(favorites))
             adapter.removeRecipe(recipe)
         }
+    }
+
+    private fun openRecipeDetail(recipe: Recipe) {
+        val fragment = RecipeDetailFragment.newInstance(recipe)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun loadFavorites(): MutableList<Recipe> {

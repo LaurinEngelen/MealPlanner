@@ -1,0 +1,136 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/recipe_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_foreground"
+                android:contentDescription="Rezeptbild" />
+
+            <ImageButton
+                android:id="@+id/close_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|top"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:contentDescription="Schließen"
+                android:padding="8dp"
+                android:alpha="0.7" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/recipe_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="Rezepttitel"
+            android:padding="8dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/recipe_prep_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zubereitung: 15m"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/recipe_cook_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kochzeit: 15m"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/recipe_total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gesamt: 30m" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/recipe_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Schnell, einfach &amp; so gut, dass man sie echt jeden Tag essen könnte!"
+            android:padding="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/ingredients_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zutaten"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/instructions_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anleitung"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/nutrition_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nährwerte" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/content_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/recipe_notes_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notizen"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <TextView
+            android:id="@+id/recipe_notes_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rezeptnotizen"
+            android:padding="16dp" />
+
+    </LinearLayout>
+</ScrollView>

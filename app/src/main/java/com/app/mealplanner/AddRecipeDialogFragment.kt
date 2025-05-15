@@ -1,5 +1,4 @@
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,11 +69,11 @@ class AddRecipeDialogFragment : DialogFragment() {
         }
 
         // Set up RecyclerView
-        ingredientsAdapter = IngredientsAdapter(ingredients)
+        ingredientsAdapter = IngredientsAdapter(ingredients, android.R.color.black)
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         ingredientsRecyclerView.adapter = ingredientsAdapter
 
-        preparationsAdapter = PreparationsAdapter(preparations)
+        preparationsAdapter = PreparationsAdapter(preparations, android.R.color.black)
         preparationsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         preparationsRecyclerView.adapter = preparationsAdapter
 

@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
 
-class PreparationsAdapter(private val preparations: List<String>) :
+class PreparationsAdapter(
+    private val preparations: List<String>,
+    private val textColorResId: Int) :
     RecyclerView.Adapter<PreparationsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,7 +25,7 @@ class PreparationsAdapter(private val preparations: List<String>) :
         val preparation = preparations[position]
         holder.textView.text = "${position + 1}. $preparation" // Add step number
         holder.textView.setTextColor(
-            ContextCompat.getColor(holder.itemView.context, android.R.color.white)
+            ContextCompat.getColor(holder.itemView.context, textColorResId)
         )
     }
 

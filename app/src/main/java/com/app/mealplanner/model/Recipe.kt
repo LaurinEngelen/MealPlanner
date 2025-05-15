@@ -1,4 +1,5 @@
 package com.app.mealplanner.model
+import java.io.Serializable
 
 data class Recipe(
     var id: Int,
@@ -10,4 +11,4 @@ data class Recipe(
     val servings: Int? = null,
     val prepTime: String? = null,
     val notes: String? = null
-)
+) : Serializable

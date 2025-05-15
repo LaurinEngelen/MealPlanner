@@ -1,3 +1,4 @@
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -6,8 +7,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
 
-class IngredientsAdapter(private val ingredients: List<String>) :
-    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+class IngredientsAdapter(
+    private val ingredients: List<String>,
+    private val textColorResId: Int
+) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.ingredientText)
@@ -23,7 +26,7 @@ class IngredientsAdapter(private val ingredients: List<String>) :
         val ingredient = ingredients[position]
         holder.textView.text = ingredient
         holder.textView.setTextColor(
-            ContextCompat.getColor(holder.itemView.context, android.R.color.white)
+            ContextCompat.getColor(holder.itemView.context, textColorResId)
         )
     }
 
