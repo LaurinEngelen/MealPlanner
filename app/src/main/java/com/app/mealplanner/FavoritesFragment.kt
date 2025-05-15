@@ -1,10 +1,14 @@
 package com.app.mealplanner
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +20,7 @@ import java.io.File
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private lateinit var adapter: FavoritesRecipeAdapter
+    private var allFavorites: MutableList<Recipe> = mutableListOf() // Store all recipes
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,11 +37,42 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         recyclerView.adapter = adapter
 
         val favorites = loadFavorites()
+        allFavorites = favorites.toMutableList() // Save all recipes for filtering
         if (favorites.isNotEmpty()) {
             adapter.updateRecipes(favorites)
         } else {
             println("Keine Favoriten gefunden.")
         }
+
+        val searchInput: EditText = view.findViewById<View>(R.id.topBar).findViewById(R.id.search_input)
+        searchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterFavorites(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        // Add the listener for the Enter key
+        searchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH || actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                filterFavorites(searchInput.text.toString()) // Apply the filter
+                true // Event handled
+            } else {
+                false // Event not handled
+            }
+        }
+    }
+
+    private fun filterFavorites(query: String) {
+        val filteredFavorites = if (query.isEmpty()) {
+            allFavorites // Zeige alle Favoriten, wenn das Suchfeld leer ist
+        } else {
+            allFavorites.filter { recipe ->
+                recipe.name.contains(query, ignoreCase = true) // Filtere nach Teilstring, unabhängig von Groß-/Kleinschreibung
+            }
+        }
+        adapter.updateRecipes(filteredFavorites.toMutableList()) // Aktualisiere die RecyclerView
     }
 
     private fun removeFavorite(recipe: Recipe) {
@@ -60,22 +96,36 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     }
 
     private fun loadFavorites(): MutableList<Recipe> {
+        val favoritesFile = File(requireContext().filesDir, "favorites.json")
+        if (!favoritesFile.exists()) {
+            // Copy the file from assets to filesDir if it doesn't exist
+            try {
+                requireContext().assets.open("favorites.json").use { inputStream ->
+                    favoritesFile.outputStream().use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("FavoritesFragment", "Error copying favorites.json: ${e.message}")
+                return mutableListOf()
+            }
+        }
+
         return try {
-            val json = requireContext().assets.open("favorites.json").bufferedReader().use { it.readText() }
+            val json = favoritesFile.readText()
             val type = object : TypeToken<MutableList<Recipe>>() {}.type
             val favorites: MutableList<Recipe> = Gson().fromJson(json, type)
 
-            // Sicherstellen, dass alle Rezepte eine ID haben
+            // Ensure all recipes have an ID
             var maxId = favorites.maxOfOrNull { it.id } ?: 0
             favorites.forEach { recipe ->
-                if (recipe.id == 0) { // Falls ein Rezept keine ID hat
+                if (recipe.id == 0) {
                     maxId++
                     recipe.id = maxId
                 }
             }
             favorites
         } catch (e: Exception) {
-            println("Error loading favorites: ${e.message}")
             mutableListOf()
         }
     }

@@ -51,8 +51,8 @@ class FavoritesRecipeAdapter(
     override fun getItemCount(): Int = recipes.size
 
     fun updateRecipes(newRecipes: MutableList<Recipe>) {
-        recipes = newRecipes
-        notifyDataSetChanged()
+        this.recipes = newRecipes
+        notifyDataSetChanged() // RecyclerView aktualisieren
     }
 
     fun removeRecipe(recipe: Recipe) {
