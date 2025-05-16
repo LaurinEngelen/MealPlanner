@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.databinding.NewRecipeItemBinding
 import com.app.mealplanner.model.Recipe
+import java.io.File
+import com.bumptech.glide.Glide
 
 class FavoritesRecipeAdapter(
     private var recipes: MutableList<Recipe>,
@@ -33,7 +35,9 @@ class FavoritesRecipeAdapter(
         holder.recipeTitle.text = currentRecipe.name
 
         if (currentRecipe.image != null) {
-            holder.recipeImage.setImageResource(currentRecipe.image as Int)
+            Glide.with(holder.itemView.context)
+                .load(File(currentRecipe.image))
+                .into(holder.recipeImage)
         } else {
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }

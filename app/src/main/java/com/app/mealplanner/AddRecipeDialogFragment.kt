@@ -1,9 +1,15 @@
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +18,13 @@ import com.app.mealplanner.model.Recipe
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class AddRecipeDialogFragment : DialogFragment() {
+
+    private var selectedImagePath: String? = null
+    private var imageUri: Uri? = null
 
     interface OnRecipeAddedListener {
         fun onRecipeAdded(recipe: Recipe)
@@ -68,6 +79,11 @@ class AddRecipeDialogFragment : DialogFragment() {
             dismiss() // Close the dialog
         }
 
+        val uploadImageButton: Button = view.findViewById(R.id.buttonUploadImage)
+        uploadImageButton.setOnClickListener {
+            openImagePicker()
+        }
+
         // Set up RecyclerView
         ingredientsAdapter = IngredientsAdapter(ingredients, android.R.color.black)
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -120,7 +136,7 @@ class AddRecipeDialogFragment : DialogFragment() {
                     name = name,
                     ingredients = ingredients,
                     preparations = preparations,
-                    image = null, // Replace with actual image handling if needed
+                    image = selectedImagePath, // Replace with actual image handling if needed
                     servings = servings,
                     prepTime = prepTime,
                     notes = notes
@@ -147,8 +163,61 @@ class AddRecipeDialogFragment : DialogFragment() {
         val newId = (recipes.maxOfOrNull { it.id } ?: 0) + 1
         val recipeWithId = recipe.copy(id = newId)
 
+        if (imageUri != null) {
+            saveImageToInternalStorage(imageUri!!, recipeWithId.id, recipeWithId.name)
+            recipeWithId.image = selectedImagePath // Aktualisiere den Bildpfad im Rezept
+        }
+
         recipes.add(recipeWithId)
         recipesFile.writeText(Gson().toJson(recipes))
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK) {
+            imageUri = data?.data
+            if (imageUri != null) {
+                Toast.makeText(requireContext(), "Image selected successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Image selection failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun saveImageToInternalStorage(imageUri: Uri, recipeId: Int, recipeName: String) {
+        try {
+            val inputStream: InputStream? = requireContext().contentResolver.openInputStream(imageUri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+
+            val imageDir = File(requireContext().filesDir, "image")
+            if (!imageDir.exists()) {
+                imageDir.mkdir()
+            }
+
+            val sanitizedRecipeName = recipeName.replace("[^a-zA-Z0-9]".toRegex(), "_")
+            selectedImagePath = "${imageDir.absolutePath}/${recipeId}_${sanitizedRecipeName}.jpg"
+            val imageFile = File(imageDir, "${recipeId}_${sanitizedRecipeName}.jpg")
+
+            val outputStream = FileOutputStream(imageFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            selectedImagePath = imageFile.absolutePath
+            Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Failed to save image: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    companion object {
+        private const val REQUEST_IMAGE_PICK = 1001
+    }
+
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_IMAGE_PICK)
     }
 }

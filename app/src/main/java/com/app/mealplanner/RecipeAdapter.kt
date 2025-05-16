@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.databinding.RecipeItemBinding
 import com.app.mealplanner.model.Recipe
+import com.bumptech.glide.Glide
 
 class RecipeAdapter(private var recipes: MutableList<Recipe>,
                     private val onSwipe: (String) -> Unit) :
@@ -32,8 +33,12 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
         val currentRecipe = recipes[position]
         holder.nameTextView.text = currentRecipe.name
 
-        if (currentRecipe.image != null) {
-            holder.recipeImage.setImageResource(currentRecipe.image as Int)
+        if (!currentRecipe.image.isNullOrEmpty()) {
+            // Assuming `image` is a file path or URL
+            Glide.with(holder.itemView.context)
+                .load(currentRecipe.image)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .into(holder.recipeImage)
         } else {
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }

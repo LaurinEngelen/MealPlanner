@@ -115,15 +115,15 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             val json = favoritesFile.readText()
             val type = object : TypeToken<MutableList<Recipe>>() {}.type
             val favorites: MutableList<Recipe> = Gson().fromJson(json, type)
-
-            // Ensure all recipes have an ID
-            var maxId = favorites.maxOfOrNull { it.id } ?: 0
             favorites.forEach { recipe ->
-                if (recipe.id == 0) {
-                    maxId++
-                    recipe.id = maxId
+                if (recipe.image != null) {
+                    val imageFile = File(requireContext().filesDir, recipe.image)
+                    if (!imageFile.exists()) {
+                        recipe.image = null // Reset if the image file is missing
+                    }
                 }
             }
+
             favorites
         } catch (e: Exception) {
             mutableListOf()
