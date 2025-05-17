@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dialogBackgroundColor"
+    android:background="@color/AbackgroundColor"
     android:padding="16dp">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="8dp"
-            android:background="@color/dialogBackgroundColor">
+            android:background="@color/AbackgroundColor">
 
             <ImageView
                 android:id="@+id/backButton"
@@ -25,13 +25,13 @@
                 android:src="@android:drawable/ic_menu_revert"
                 android:contentDescription="Back"
                 android:padding="8dp"
-                app:tint="@android:color/white" />
+                app:tint="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add a recipe"
-                android:textColor="@android:color/white"
+                android:textColor="@color/AcardTextColor"
                 android:textSize="20sp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp" />
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Recipe Title"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -54,33 +54,44 @@
             android:inputType="text"
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textColorHint="@android:color/darker_gray" />
 
         <!-- Image Picker -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upload Image"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <Button
+        <LinearLayout
             android:id="@+id/buttonUploadImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upload Image"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@android:color/holo_blue_dark"
-            android:textColor="@android:color/white" />
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:background="@drawable/dashed_line_background"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_camera"
+                android:contentDescription="Upload Image"
+                app:tint="@color/AcardTextColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Image"
+                android:textColor="@color/AcardTextColor"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
 
         <!-- Description -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -94,7 +105,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textColorHint="@android:color/darker_gray" />
 
         <!-- Ingredients -->
@@ -102,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ingredients"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -123,7 +134,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textColorHint="@android:color/darker_gray" />
 
         <!-- Instructions -->
@@ -131,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Instructions"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -152,7 +163,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textColorHint="@android:color/darker_gray" />
 
         <!-- Servings -->
@@ -160,7 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Servings"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -173,7 +184,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textColorHint="@android:color/darker_gray" />
 
         <!-- Prep Time -->
@@ -181,7 +192,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Preparation Time"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -200,7 +211,7 @@
                 android:inputType="number"
                 android:background="@drawable/edit_text_background"
                 android:padding="8dp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/AcardTextColor"
                 android:textColorHint="@android:color/darker_gray" />
 
             <EditText
@@ -213,7 +224,7 @@
                 android:background="@drawable/edit_text_background"
                 android:padding="8dp"
                 android:layout_marginStart="8dp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/AcardTextColor"
                 android:textColorHint="@android:color/darker_gray" />
         </LinearLayout>
 
@@ -222,7 +233,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Notes"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -236,7 +247,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/AcardTextColor"
             android:textColorHint="@android:color/darker_gray" />
 
         <!-- Add Recipe Button -->
@@ -246,7 +257,7 @@
             android:layout_height="wrap_content"
             android:text="Add Recipe"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@android:color/holo_green_dark"
+            android:backgroundTint="@color/AprimaryColor"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </ScrollView>

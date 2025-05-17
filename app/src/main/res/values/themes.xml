@@ -2,7 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Mealplanner" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/AprimaryColor</item>
+        <item name="colorSecondary">@color/AsecondaryColor</item>
+
+        <item name="android:colorBackground">@color/AbackgroundColor</item>
+        <item name="colorSurface">@color/AcardBackgroundColor</item>
+
+        <item name="android:textColor">@color/AcardTextColor</item>
     </style>
 
     <style name="Theme.Mealplanner" parent="Base.Theme.Mealplanner" />

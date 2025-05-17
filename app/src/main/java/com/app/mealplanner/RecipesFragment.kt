@@ -19,6 +19,10 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
     private lateinit var adapter: RecipeAdapter
     private val swipedRecipes = mutableListOf<Int>() // Session-based list
 
+    companion object {
+        private var sessionRecipes: MutableList<Recipe>? = null // Speichert die Reihenfolge der Rezepte während der Session
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         copyRecipesToExternalStorage()
@@ -34,8 +38,12 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
         }
         recyclerView.adapter = adapter
 
-        val recipes = loadRecipes()
-        val filteredRecipes = filterRecipes(recipes)
+        // Rezepte nur beim ersten Aufruf mischen
+        if (sessionRecipes == null) {
+            sessionRecipes = loadRecipes().shuffled().toMutableList()
+        }
+
+        val filteredRecipes = filterRecipes(sessionRecipes!!)
         adapter.updateRecipes(filteredRecipes)
 
         // Floating Action Button
@@ -64,12 +72,16 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
+
     private fun showAddRecipeDialog() {
         val dialog = AddRecipeDialogFragment()
         dialog.setOnRecipeAddedListener(object : AddRecipeDialogFragment.OnRecipeAddedListener {
             override fun onRecipeAdded(recipe: Recipe) {
-                val recipes = loadRecipes()
-                val filteredRecipes = filterRecipes(recipes)
+                if (sessionRecipes == null) {
+                    sessionRecipes = loadRecipes().shuffled().toMutableList()
+                }
+                sessionRecipes!!.add(0, recipe) // Neues Rezept an den Anfang der Session-Liste setzen
+                val filteredRecipes = filterRecipes(sessionRecipes!!)
                 adapter.updateRecipes(filteredRecipes) // RecyclerView aktualisieren
             }
         })

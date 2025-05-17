@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#222222"
+            android:background="@color/AcardBackgroundColor"
             android:orientation="vertical">
 
             <FrameLayout
@@ -35,16 +35,16 @@
                 android:id="@+id/recipeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:textColor="@color/AcardTextColor"
                 android:textSize="16sp"
                 android:padding="8dp"
-                android:background="#222222" />
+                android:background="@color/AcardBackgroundColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#222222"
+                android:background="@color/AcardBackgroundColor"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="8dp">
@@ -53,7 +53,7 @@
                     android:id="@+id/recipeTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/AcardTextColor"
                     android:textSize="14sp" />
 
                 <ImageView

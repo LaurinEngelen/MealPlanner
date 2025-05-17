@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp"
-    android:background="@color/cardBackgroundColor"
+    android:background="@color/AcardBackgroundColor"
     app:cardCornerRadius="16dp"
     app:cardElevation="4dp">
 
@@ -13,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        android:background="@color/cardBackgroundColor">
+        android:background="@color/AcardBackgroundColor">
 
         <ImageView
             android:id="@+id/recipeImage"
             android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
             android:text="Recipe Name"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeImage" />
@@ -46,7 +46,7 @@
             android:layout_marginTop="12dp"
             android:text="Recipe Description"
             android:textSize="14sp"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeName" />
@@ -58,7 +58,7 @@
             android:layout_marginTop="12dp"
             android:text="Servings: 4"
             android:textSize="14sp"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeDescription" />
@@ -70,7 +70,7 @@
             android:layout_marginTop="12dp"
             android:text="Preparation Time: 1h 30m"
             android:textSize="14sp"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/servings" />
@@ -82,7 +82,7 @@
             android:layout_marginTop="16dp"
             android:text="Ingredients:"
             android:textStyle="bold"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/preparationTime" />
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Ingredient 1\nIngredient 2\nIngredient 3"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ingredientsLabel" />
@@ -105,7 +105,7 @@
             android:layout_marginTop="16dp"
             android:text="Preparation:"
             android:textStyle="bold"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Step 1...\nStep 2...\nStep 3..."
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/preparationLabel" />
@@ -128,7 +128,7 @@
             android:layout_marginTop="16dp"
             android:text="Notes:"
             android:textStyle="bold"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/preparationList" />
@@ -140,7 +140,7 @@
             android:layout_marginTop="16dp"
             android:text="Notes: Optional notes about the recipe."
             android:textSize="14sp"
-            android:textColor="@color/cardTextColor"
+            android:textColor="@color/AcardTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/notesLabel" />

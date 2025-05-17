@@ -36,11 +36,17 @@
     <color name="custom_light_gray">#323232</color>
     <color name="custom_dark_blue">#0000FF</color>
     <color name="custom_light_blue">#00BFFF</color>
-    <color name="cardTextColor">#FFFFFFFF</color>
     <color name="cardTextColorDark">#FF6200EE</color>
     <color name="cardTextColorLight">#FF3700B3</color>
-    <color name="cardBackgroundColor">#222222</color>
     <color name="dialogBackgroundColor">#333333</color> <!-- Beispiel für einen dunklen Grauton -->
+
+    <color name="AbackgroundColor">#eef2f6</color>
+    <color name="AcardBackgroundColor">#ffffff</color>
+    <color name="AcardTextColor">#000000</color>
+    <color name="AbuttonColor">#FF8C00</color>
+    <color name="AbuttonTextColor">#ffffff</color>
+    <color name="AprimaryColor">#FFA07A</color>
+    <color name="AsecondaryColor">#8cbbcd</color>
 
 
 </resources>

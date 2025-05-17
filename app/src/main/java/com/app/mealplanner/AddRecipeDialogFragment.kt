@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,8 +81,8 @@ class AddRecipeDialogFragment : DialogFragment() {
             dismiss() // Close the dialog
         }
 
-        val uploadImageButton: Button = view.findViewById(R.id.buttonUploadImage)
-        uploadImageButton.setOnClickListener {
+        val uploadButton = view.findViewById<LinearLayout>(R.id.buttonUploadImage)
+        uploadButton.setOnClickListener {
             openImagePicker()
         }
 
