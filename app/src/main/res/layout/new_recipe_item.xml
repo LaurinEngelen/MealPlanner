@@ -31,10 +31,11 @@
                 android:id="@+id/recipeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/AcardBackgroundColor"
+                android:padding="8dp"
                 android:textColor="@color/AcardTextColor"
                 android:textSize="16sp"
-                android:padding="8dp"
-                android:background="@color/AcardBackgroundColor" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"

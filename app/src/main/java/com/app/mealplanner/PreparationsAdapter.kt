@@ -1,3 +1,4 @@
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ class PreparationsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val preparation = preparations[position]
-        holder.textView.text = "${position + 1}. $preparation" // Add step number
+        holder.textView.text = Html.fromHtml("<b>${position + 1}.</b> $preparation", Html.FROM_HTML_MODE_LEGACY)
         holder.textView.setTextColor(
             ContextCompat.getColor(holder.itemView.context, textColorResId)
         )

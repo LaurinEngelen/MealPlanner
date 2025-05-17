@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="8dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="4dp">
@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/recipeImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="240dp"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="502dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="240dp"
             android:background="@color/AcardBackgroundColor"
             android:orientation="vertical"
             android:padding="16dp">
@@ -97,24 +97,6 @@
                 android:layout_marginTop="8dp"
                 android:text="Step 1...\nStep 2...\nStep 3..."
                 android:textColor="@color/AcardTextColor" />
-
-            <TextView
-                android:id="@+id/notesLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Notize:"
-                android:textColor="@color/AcardTextColor"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Notes: Optional notes about the recipe."
-                android:textColor="@color/AcardTextColor"
-                android:textSize="14sp" />
 
         </LinearLayout>
 

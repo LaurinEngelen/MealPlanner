@@ -1,8 +1,10 @@
 package com.app.mealplanner
 
 import IngredientsAdapter
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,7 +26,7 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
         val recipeDescription: TextView = binding.recipeDescription
         val servings: TextView = binding.servings
         val preparationTime: TextView = binding.preparationTime
-        val notes: TextView = binding.notes
+        //val notes: TextView = binding.notes
         val ingredientsRecyclerView = binding.ingredientsRecyclerView // Expose RecyclerView
     }
 
@@ -55,10 +57,17 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
         holder.preparationList.text = currentRecipe.preparations
             ?.mapIndexed { index, preparation -> "${index + 1}. $preparation" }
             ?.joinToString("\n") ?: ""
-        holder.servings.text = "Portionen: ${currentRecipe.servings ?: "Portionen: N/A"}"
-        holder.preparationTime.text = "Zubereitungszeit: ${currentRecipe.prepTime ?: "Preparation Time: N/A"}"
-        holder.notes.text = currentRecipe.notes ?: ""
+        holder.servings.text = Html.fromHtml("<b>Portionen:</b> ${currentRecipe.servings ?: "<b>Portionen:</b> N/A"}")
+        holder.preparationTime.text = Html.fromHtml("<b>Zubereitungszeit:</b> ${currentRecipe.prepTime ?: "<b>Zubereitungszeit:</b> N/A"}")
         holder.recipeDescription.text = currentRecipe.description ?: "Keine Beschreibung verfügbar"
+        /*if (currentRecipe.notes.isNullOrEmpty()) {
+            holder.notes.visibility = View.GONE
+            holder.itemView.findViewById<TextView>(R.id.notesLabel).visibility = View.GONE
+        } else {
+            holder.notes.visibility = View.VISIBLE
+            holder.itemView.findViewById<TextView>(R.id.notesLabel).visibility = View.VISIBLE
+            holder.notes.text = currentRecipe.notes
+        }*/
     }
 
     override fun getItemCount(): Int = recipes.size
