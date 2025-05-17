@@ -128,6 +128,7 @@ class AddRecipeDialogFragment : DialogFragment() {
 
         saveButton.setOnClickListener {
             val name = nameInput.text.toString()
+            val description = preparationInput.text.toString() // Capture the description
             val servings = servingsInput.text.toString().toIntOrNull() ?: 0
             val prepTime = "${prepHoursInput.text}:${prepMinutesInput.text}"
             val notes = notesInput.text.toString()
@@ -136,9 +137,10 @@ class AddRecipeDialogFragment : DialogFragment() {
                 val newRecipe = Recipe(
                     id = System.currentTimeMillis().toInt(),
                     name = name,
+                    description = description, // Save the description
                     ingredients = ingredients,
                     preparations = preparations,
-                    image = selectedImagePath, // Replace with actual image handling if needed
+                    image = selectedImagePath,
                     servings = servings,
                     prepTime = prepTime,
                     notes = notes

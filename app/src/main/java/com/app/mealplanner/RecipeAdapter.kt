@@ -1,5 +1,6 @@
 package com.app.mealplanner
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -43,12 +44,16 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
-        holder.ingredientsList.text = currentRecipe.ingredients?.joinToString("\n") ?: ""
-        holder.preparationList.text = currentRecipe.preparations?.joinToString("\n") ?: ""
-        holder.servings.text = "Servings: ${currentRecipe.servings ?: "Servings: N/A"}"
-        holder.preparationTime.text = "Preparation Time: ${currentRecipe.prepTime ?: "Preparation Time: N/A"}"
+        holder.ingredientsList.text = currentRecipe.ingredients
+            ?.mapIndexed { index, preparation -> "● $preparation" }
+            ?.joinToString("\n") ?: ""
+        holder.preparationList.text = currentRecipe.preparations
+            ?.mapIndexed { index, preparation -> "${index + 1}. $preparation" }
+            ?.joinToString("\n") ?: ""
+        holder.servings.text = "Portionen: ${currentRecipe.servings ?: "Portionen: N/A"}"
+        holder.preparationTime.text = "Zubereitungszeit: ${currentRecipe.prepTime ?: "Preparation Time: N/A"}"
         holder.notes.text = currentRecipe.notes ?: ""
-        holder.recipeDescription.text = currentRecipe.description ?: "No description available"
+        holder.recipeDescription.text = currentRecipe.description ?: "Keine Beschreibung verfügbar"
     }
 
     override fun getItemCount(): Int = recipes.size

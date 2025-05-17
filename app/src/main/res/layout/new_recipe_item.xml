@@ -11,25 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Image at the top -->
+        <ImageView
+            android:id="@+id/recipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <!-- Content below the image -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
             android:background="@color/AcardBackgroundColor"
             android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_margin="4dp">
-
-                <ImageView
-                    android:id="@+id/recipeImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    tools:src="@tools:sample/backgrounds/scenic" />
-
-            </FrameLayout>
 
             <TextView
                 android:id="@+id/recipeTitle"

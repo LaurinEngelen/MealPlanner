@@ -3,147 +3,122 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@color/AcardBackgroundColor"
     app:cardCornerRadius="16dp"
     app:cardElevation="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:background="@color/AcardBackgroundColor">
+        android:layout_height="wrap_content">
 
+        <!-- Image at the top -->
         <ImageView
             android:id="@+id/recipeImage"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/recipeName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Recipe Name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipeImage" />
+        <!-- Content below the image -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="502dp"
+            android:layout_marginTop="200dp"
+            android:background="@color/AcardBackgroundColor"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/recipeDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Recipe Description"
-            android:textSize="14sp"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipeName" />
+            <TextView
+                android:id="@+id/recipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recipe Name"
+                android:textColor="@color/AcardTextColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/servings"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Servings: 4"
-            android:textSize="14sp"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipeDescription" />
+            <TextView
+                android:id="@+id/recipeDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Recipe Description"
+                android:textColor="@color/AcardTextColor"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/preparationTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Preparation Time: 1h 30m"
-            android:textSize="14sp"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/servings" />
+            <TextView
+                android:id="@+id/servings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Servings: 4"
+                android:textColor="@color/AcardTextColor"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/ingredientsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Ingredients:"
-            android:textStyle="bold"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/preparationTime" />
+            <TextView
+                android:id="@+id/preparationTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Preparation Time: 1h 30m"
+                android:textColor="@color/AcardTextColor"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/ingredientsList"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Ingredient 1\nIngredient 2\nIngredient 3"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientsLabel" />
+            <TextView
+                android:id="@+id/ingredientsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Zutaten:"
+                android:textColor="@color/AcardTextColor"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/preparationLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Preparation:"
-            android:textStyle="bold"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
+            <TextView
+                android:id="@+id/ingredientsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Ingredient 1\nIngredient 2\nIngredient 3"
+                android:textColor="@color/AcardTextColor" />
 
-        <TextView
-            android:id="@+id/preparationList"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Step 1...\nStep 2...\nStep 3..."
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/preparationLabel" />
+            <TextView
+                android:id="@+id/preparationLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Zubereitung:"
+                android:textColor="@color/AcardTextColor"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/notesLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Notes:"
-            android:textStyle="bold"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/preparationList" />
+            <TextView
+                android:id="@+id/preparationList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Step 1...\nStep 2...\nStep 3..."
+                android:textColor="@color/AcardTextColor" />
 
-        <TextView
-            android:id="@+id/notes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Notes: Optional notes about the recipe."
-            android:textSize="14sp"
-            android:textColor="@color/AcardTextColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/notesLabel" />
+            <TextView
+                android:id="@+id/notesLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Notize:"
+                android:textColor="@color/AcardTextColor"
+                android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Notes: Optional notes about the recipe."
+                android:textColor="@color/AcardTextColor"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 </androidx.cardview.widget.CardView>

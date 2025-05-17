@@ -24,7 +24,7 @@ class IngredientsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ingredient = ingredients[position]
-        holder.textView.text = ingredient
+        holder.textView.text = "● ${ingredient}"
         holder.textView.setTextColor(
             ContextCompat.getColor(holder.itemView.context, textColorResId)
         )
