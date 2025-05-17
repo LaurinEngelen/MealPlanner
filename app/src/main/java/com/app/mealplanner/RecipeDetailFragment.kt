@@ -4,12 +4,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
 import com.app.mealplanner.model.Recipe
+import com.bumptech.glide.Glide
 
 class RecipeDetailFragment : Fragment() {
 
@@ -45,10 +47,22 @@ class RecipeDetailFragment : Fragment() {
 
         val titleTextView: TextView = view.findViewById(R.id.recipe_title)
         val descriptionTextView: TextView = view.findViewById(R.id.recipe_description)
+        val recipeImageView: ImageView = view.findViewById(R.id.recipe_image) // Recipe image view
 
         recipe?.let {
             titleTextView.text = it.name
             descriptionTextView.text = it.description
+
+            // Load the recipe image using Glide
+            if (!it.image.isNullOrEmpty()) {
+                Glide.with(this)
+                    .load(it.image)
+                    .placeholder(android.R.drawable.ic_menu_gallery) // Placeholder while loading
+                    .error(android.R.drawable.ic_dialog_alert) // Fallback if loading fails
+                    .into(recipeImageView)
+            } else {
+                recipeImageView.setImageResource(android.R.drawable.ic_menu_gallery) // Default image
+            }
         }
 
         val ingredientsButton: Button = view.findViewById(R.id.ingredients_button)

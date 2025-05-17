@@ -74,13 +74,12 @@
                 android:textColor="@color/AcardTextColor"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/ingredientsList"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ingredientsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Ingredient 1\nIngredient 2\nIngredient 3"
-                android:textColor="@color/AcardTextColor" />
+                tools:listitem="@layout/item_ingredient" />
 
             <TextView
                 android:id="@+id/preparationLabel"
