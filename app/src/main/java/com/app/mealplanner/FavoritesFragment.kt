@@ -66,13 +66,13 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private fun filterFavorites(query: String) {
         val filteredFavorites = if (query.isEmpty()) {
-            allFavorites // Zeige alle Favoriten, wenn das Suchfeld leer ist
+            allFavorites // Show all favorites if the search field is empty
         } else {
             allFavorites.filter { recipe ->
-                recipe.name.contains(query, ignoreCase = true) // Filtere nach Teilstring, unabhängig von Groß-/Kleinschreibung
+                recipe.name.contains(query, ignoreCase = true) // Filter by name
             }
         }
-        adapter.updateRecipes(filteredFavorites.toMutableList()) // Aktualisiere die RecyclerView
+        adapter.updateRecipes(filteredFavorites.toMutableList()) // Update RecyclerView
     }
 
     private fun removeFavorite(recipe: Recipe) {
@@ -115,11 +115,13 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             val json = favoritesFile.readText()
             val type = object : TypeToken<MutableList<Recipe>>() {}.type
             val favorites: MutableList<Recipe> = Gson().fromJson(json, type)
+
+            // Log missing images instead of resetting the property
             favorites.forEach { recipe ->
                 if (recipe.image != null) {
                     val imageFile = File(requireContext().filesDir, recipe.image)
                     if (!imageFile.exists()) {
-                        recipe.image = null // Reset if the image file is missing
+                        Log.w("FavoritesFragment", "Image file missing for recipe: ${recipe.name}")
                     }
                 }
             }

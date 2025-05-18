@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add a recipe"
+                android:text="Rezepte hinzufügen"
                 android:textColor="@color/AcardTextColor"
                 android:textSize="20sp"
                 android:layout_gravity="center_vertical"
@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipe Title"
+            android:text="Rezept Titel"
             android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -50,7 +50,7 @@
             android:id="@+id/inputRecipeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Recipe Title"
+            android:hint="Rezept Titel"
             android:inputType="text"
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upload Image"
+                android:text="Bild hochladen"
                 android:textColor="@color/AcardTextColor"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp" />
@@ -90,7 +90,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="Beschreibung"
             android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -99,7 +99,7 @@
             android:id="@+id/inputDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description"
+            android:hint="Beschreibung"
             android:inputType="textMultiLine"
             android:lines="4"
             android:background="@drawable/edit_text_background"
@@ -112,7 +112,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ingredients"
+            android:text="Zutaten"
             android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -128,7 +128,7 @@
             android:id="@+id/inputNewIngredient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add more ingredients"
+            android:hint="Zutaten hinzufügen"
             android:inputType="text"
             android:imeOptions="actionDone"
             android:background="@drawable/edit_text_background"
@@ -141,7 +141,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Instructions"
+            android:text="Zubereitung"
             android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -157,7 +157,7 @@
             android:id="@+id/inputNewInstruction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add new instruction"
+            android:hint="Schritt hinzufügen"
             android:inputType="text"
             android:imeOptions="actionDone"
             android:background="@drawable/edit_text_background"
@@ -170,7 +170,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Servings"
+            android:text="Portionen"
             android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -179,7 +179,7 @@
             android:id="@+id/inputServings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Servings"
+            android:hint="Portionen"
             android:inputType="number"
             android:background="@drawable/edit_text_background"
             android:padding="8dp"
@@ -191,7 +191,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Preparation Time"
+            android:text="Zubereitungszeit"
             android:textColor="@color/AcardTextColor"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -207,7 +207,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Prep Hours"
+                android:hint="Stunden"
                 android:inputType="number"
                 android:background="@drawable/edit_text_background"
                 android:padding="8dp"
@@ -219,7 +219,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Prep Minutes"
+                android:hint="Minuten"
                 android:inputType="number"
                 android:background="@drawable/edit_text_background"
                 android:padding="8dp"
@@ -241,7 +241,7 @@
             android:id="@+id/inputNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Notes (Optional)"
+            android:hint="Notizen (Optional)"
             android:inputType="textMultiLine"
             android:lines="3"
             android:background="@drawable/edit_text_background"
@@ -255,7 +255,7 @@
             android:id="@+id/buttonAddRecipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Recipe"
+            android:text="Rezept hinzufügen"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/AprimaryColor"
             android:textColor="@android:color/white" />

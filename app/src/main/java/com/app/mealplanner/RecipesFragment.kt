@@ -17,10 +17,10 @@ import java.io.File
 class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
     private lateinit var adapter: RecipeAdapter
-    private val swipedRecipes = mutableListOf<Int>() // Session-based list
 
     companion object {
         private var sessionRecipes: MutableList<Recipe>? = null // Speichert die Reihenfolge der Rezepte während der Session
+        private val swipedRecipes = mutableListOf<Int>() // Speichert dauerhaft während der App-Sitzung
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,12 +66,20 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val recipe = adapter.getRecipes()[position]
-                onRecipeSwiped(recipe) // Handle swipe action
+
+                if (direction == ItemTouchHelper.LEFT) {
+                    // Nach links wischen: Nur für die Session ausblenden
+                    swipedRecipes.add(recipe.id)
+                    val updatedRecipes = filterRecipes(loadRecipes())
+                    adapter.updateRecipes(updatedRecipes)
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    // Nach rechts wischen: Zu den Favoriten hinzufügen
+                    onRecipeSwiped(recipe)
+                }
             }
         })
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
-
 
     private fun showAddRecipeDialog() {
         val dialog = AddRecipeDialogFragment()
