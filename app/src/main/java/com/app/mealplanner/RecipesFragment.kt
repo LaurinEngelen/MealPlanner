@@ -101,14 +101,19 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
         return if (recipesFile.exists()) {
             try {
                 val json = recipesFile.readText()
-                Log.d("RecipesFragment", "JSON Content: $json") // Log the JSON content
-
                 val type = object : TypeToken<MutableList<Recipe>>() {}.type
                 val recipes: MutableList<Recipe> = Gson().fromJson(json, type)
 
-// Log each parsed recipe
+                // Update image paths to point to internal storage
                 recipes.forEach { recipe ->
-                    Log.d("RecipesFragment", "Parsed Recipe: $recipe")
+                    if (recipe.image != null) {
+                        val imageFile = File(requireContext().filesDir, recipe.image)
+                        if (imageFile.exists()) {
+                            recipe.image = imageFile.absolutePath
+                        } else {
+                            recipe.image = null // Reset if the image file is missing
+                        }
+                    }
                 }
 
                 recipes
@@ -174,8 +179,14 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
     private fun mergeRecipesFromAssetsAndInternalStorage() {
         val recipesFile = File(requireContext().filesDir, "recipes.json")
+        val imagesDir = File(requireContext().filesDir, "images")
 
-        // Load recipes from assets
+        // Ensure the images directory exists
+        if (!imagesDir.exists()) {
+            imagesDir.mkdir()
+        }
+
+        // Copy recipes from assets
         val assetRecipes: MutableList<Recipe> = try {
             val json = requireContext().assets.open("recipes.json").bufferedReader().use { it.readText() }
             val type = object : TypeToken<MutableList<Recipe>>() {}.type
@@ -185,9 +196,26 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             mutableListOf()
         }
 
-        // Check if the internal file exists
+        // Copy images from assets to internal storage
+        try {
+            requireContext().assets.list("images")?.forEach { imageName ->
+                val inputStream = requireContext().assets.open("images/$imageName")
+                val outputFile = File(imagesDir, imageName)
+                if (!outputFile.exists()) {
+                    inputStream.use { input ->
+                        outputFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Check if the internal recipes file exists
         if (!recipesFile.exists()) {
-            // If the internal file doesn't exist, save the asset recipes to internal storage
+            // Save the asset recipes to internal storage if the file doesn't exist
             recipesFile.writeText(Gson().toJson(assetRecipes))
             Log.d("RecipesFragment", "Internal recipes.json created from assets.")
             return

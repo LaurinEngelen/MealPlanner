@@ -1,153 +1,215 @@
 [
   {
     "id": 1,
-    "name": "Spaghetti Bolognese",
-    "description": "Ein klassisches italienisches Nudelgericht mit einer herzhaften Soße aus Hackfleisch, Tomaten und Kräutern.",
+    "name": "Gulasch mit Spätzle",
+    "description": "Ein herzhaftes Gericht mit Rindergulasch, Karotten und Spätzle.",
     "ingredients": [
-      "Spaghetti",
-      "Tomatensoße",
-      "Hackfleisch"
+      "Rindergulasch",
+      "Karotten",
+      "Staudensellerie",
+      "Zwiebel",
+      "Paprika",
+      "Knoblauch",
+      "Rotwein",
+      "Rinderbrühe"
     ],
     "preparations": [
-      "Nudeln kochen",
-      "Soße zubereiten",
-      "Zusammenmischen"
+      "Fleisch von außen anbräunen und wieder rausnehmen",
+      "Zwiebel, Knoblauch, Karotten, Paprika und Sellerie kleinschneiden und anbraten",
+      "Ablöschen mit Rotwein und Rinderbrühe dazugeben",
+      "Fleisch wieder dazugeben und mind. 3 Stunden auf niedriger Temp. köcheln lassen",
+      "Spätzle selbst machen oder nach Packungsanleitung zubereiten",
+      "Gulasch mit Spätzle servieren"
     ],
-    "image": null,
-    "servings": 4,
-    "prepTime": "0:30",
-    "notes": "Verwenden Sie frischen Basilikum für besseren Geschmack."
+    "image": "images/1_Gulasch_mit_Sp_tzle.jpg",
+    "servings": 6,
+    "prepTime": "4:00",
+    "notes": "Je länger das Gulasch köchelt, desto besser wird es. Am besten am Vortag zubereiten und über Nacht ziehen lassen."
   },
   {
     "id": 2,
-    "name": "Caesar Salad",
-    "description": "Ein einfacher und erfrischender Salat mit Römersalat, Croutons und cremigem Caesar-Dressing.",
+    "name": "Fried Rice",
+    "description": "Ein asiatisches Geicht mit gebratenem Reis, Gemüse und Sojasauce.",
     "ingredients": [
-      "Salat",
-      "Croutons",
-      "Caesar-Dressing"
+      "Thaireis vom Vortag",
+      "Frühlingszwiebel",
+      "Karotten",
+      "Paprika",
+      "Erbsen",
+      "Sojasauce",
+      "Sesamöl",
+      "Eier"
     ],
     "preparations": [
-      "Alle Zutaten mischen"
+      "Gemüse klein schneiden",
+      "Eier in einer Pfanne braten und beiseite stellen",
+      "Gemüse in einer Pfanne anbraten und den Reis dazugeben",
+      "Mit Sojasauce und Sesamöl würzen",
+      "Eier dazugeben und alles gut vermischen",
+      "Mit Frühlingszwiebeln garnieren und servieren"
     ],
-    "image": null,
+    "image": "images/2_Fried_Rice.jpg",
     "servings": 2,
-    "prepTime": "0:15",
-    "notes": "Fügen Sie gegrilltes Hähnchen für eine vollständige Mahlzeit hinzu."
+    "prepTime": "0:20",
+    "notes": ""
   },
   {
     "id": 3,
-    "name": "Chicken Curry",
-    "description": "Ein aromatisches Currygericht mit Hähnchen, Currypulver und Kokosmilch.",
+    "name": "Teriyaki Hähnchen mit Reis und Brokkoli",
+    "description": "Ein asiatisches Gericht mit Hähnchen, Brokkoli und Teriyaki-Soße.",
     "ingredients": [
       "Hähnchen",
-      "Currypulver",
-      "Kokosmilch"
+      "Thaireis",
+      "Brokkoli",
+      "Sojasauce",
+      "Sesamöl",
+      "Brauner Zucker",
+      "Knoblauch",
+      "Ingwer"
     ],
     "preparations": [
-      "Hähnchen kochen",
-      "Currypulver hinzufügen",
-      "Kokosmilch hinzufügen"
+      "Reis und Brokkoli kochen",
+      "Sojasoße, Sesamöl, Zucker, Knoblauch und Ingwer in einer Schüssel vermischen",
+      "Hähnchen in einer Pfanne anbraten",
+      "Teriyaki-Soße dazugeben und köcheln lassen bis sie andickt",
+      "Hähnchen mit Reis und Brokkoli servieren"
     ],
-    "image": null,
-    "servings": 4,
+    "image": "images/3_Teriyaki_H_hnchen_mit_Reis_und_Brokkoli.jpg",
+    "servings": 2,
     "prepTime": "0:40",
-    "notes": "Mit gedämpftem Reis servieren."
+    "notes": "Verwenden Sie frischen Ingwer für mehr Geschmack."
   },
   {
     "id": 4,
-    "name": "Beef Tacos",
-    "description": "Mexikanische Tacos gefüllt mit gewürztem Hackfleisch und frischen Toppings.",
+    "name": "Salami Pizza",
+    "description": "Eine leckere Pizza mit Salami, Käse und Tomatensoße.",
     "ingredients": [
-      "Taco-Schalen",
-      "Hackfleisch",
-      "Salat",
-      "Tomate"
+      "Pizza-Teig",
+      "Salami",
+      "Gouda",
+      "Tomatensoße",
+        "Oregano",
+      "Kräuter der Provence"
     ],
     "preparations": [
-      "Hackfleisch kochen",
-      "Taco-Schalen mit Hackfleisch und Toppings füllen"
+      "Pizzateig ausrollen",
+      "Tomatensoße mit Kräutern vermischen und auf den Teig streichen",
+      "Salami und Käse darauf verteilen",
+      "Im Ofen bei 220 Grad ca. 15-20 Minuten backen",
+      "Mit frischen Kräutern garnieren und servieren"
     ],
-    "image": null,
-    "servings": 3,
-    "prepTime": "0:25",
-    "notes": "Mit Sauerrahm und Salsa garnieren."
+    "image": "images/4_Salami_Pizza.jpg",
+    "servings": 4,
+    "prepTime": "0:50",
+    "notes": ""
   },
   {
     "id": 5,
-    "name": "Vegetable Stir Fry",
-    "description": "Ein schnelles und gesundes Gericht mit gebratenem Gemüse und Sojasauce.",
+    "name": "Apfel-Streusel Kuchen",
+    "description": "Ein leckerer Apfelkuchen mit Streuseln.",
     "ingredients": [
-      "Gemischtes Gemüse",
-      "Sojasauce",
-      "Reis"
+      "Weizenmehl",
+      "Backpulver",
+      "Zucker",
+      "Butter",
+      "Eier",
+      "Äpfel",
+      "Zimt",
+      "Zitronensaft"
     ],
     "preparations": [
-      "Gemüse anbraten",
-      "Mit Reis servieren"
+      "Den Boden der 26 cm Springform mit Backpapier auslegen, Ränder leicht fetten und mit Mehl bestäuben.",
+      "Alle Zutaten zu einem Streuselteig (gerührten Mürbteig) verkneten. Ca. 15 Minuten eingewickelt kühl stellen. Etwa zwei Drittel für Boden und Rand abnehmen, daraus eine Kugel formen und diese etwas größer als Backformgröße ausrollen.",
+      "Ofen auf 180 Grad Ober- und Unterhitze vorheizen",
+      "Äpfel schälen, putzen, in Würfel schneiden. Mit Zucker, Saft und Zimt mischen. Die Apfel-Mischung auf dem Boden verteilen. Restliche Streusel drüber geben.",
+      "Kuchen ca. 55 Minuten backen, eventuell gegen Ende abdecken, damit er nicht zu dunkel wird."
     ],
-    "image": null,
-    "servings": 2,
-    "prepTime": "0:20",
-    "notes": "Verwenden Sie Sesamöl für zusätzlichen Geschmack."
+    "image": "images/5_Apfel-Streusel_Kuchen.jpg",
+    "servings": 10,
+    "prepTime": "1:30",
+    "notes": ""
   },
   {
     "id": 6,
-    "name": "Pancakes",
-    "description": "Ein klassisches Frühstücksgericht, bestehend aus fluffigen Pfannkuchen.",
+    "name": "Kartoffelgratin mit Blumenkohl",
+    "description": "Ein herzafter Auflauf mit Kartoffeln und Blumenkohl.",
     "ingredients": [
-      "Mehl",
-      "Milch",
-      "Eier",
-      "Zucker"
+      "Kartoffeln",
+      "Blumenkohl",
+      "Zwiebel",
+      "Knoblauch",
+      "Sahne",
+      "Käse"
     ],
     "preparations": [
-      "Zutaten mischen",
-      "In einer Pfanne goldbraun backen"
+      "Blumenkohl in Röschen teilen und in Salzwasser blanchieren",
+      "Kartoffeln in feine Scheiben schneiden und in eine Auflaufform schichten",
+      "Zwiebel und Knoblauch anbraten und mit der Sahne leicht aufkochen lassen",
+      "Die Sahne über die Kartoffeln gießen und mit Käse bestreuen",
+      "Im Ofen bei 180 Grad ca. 45 Minuten backen, bis die Kartoffeln gar sind"
     ],
-    "image": null,
-    "servings": 4,
-    "prepTime": "0:20",
-    "notes": "Mit Sirup oder frischen Früchten servieren."
+    "image": "images/6_Kartoffelgratin_mit_Blumenkohl.jpg",
+    "servings": 6,
+    "prepTime": "1:30",
+    "notes": ""
   },
   {
     "id": 7,
-    "name": "Grilled Cheese Sandwich",
-    "description": "Ein einfacher und schneller Toast mit geschmolzenem Käse.",
+    "name": "Erdbeerkuchen mit Vanillepudding",
+    "description": "Ein fruchtiger und weicher Kuchen mit Erdbeeren und Vanillepudding.",
     "ingredients": [
-      "Brot",
-      "Käse",
-      "Butter"
+      "Mehl",
+      "Eier",
+      "Zucker",
+      "Salz",
+      "Butter",
+      "Backpulver",
+      "Milch",
+      "Vanillepuddingpulver",
+      "Erdbeeren"
     ],
     "preparations": [
-      "Brot mit Butter bestreichen",
-      "Käse hinzufügen",
-      "Grillen, bis es goldbraun ist"
+      "Den Backofen auf 175° Grad Ober-/Unterhitze vorheizen und die Backform sorgfältig mit Butter einfetten. ",
+      "Mit einem Handmixer die Eier und den Zucker für 3-4 Minuten schaumig rühren, bis die Masse dick und weiß geworden ist.",
+      "Das Mehl mit dem Backpulver und dem Salz mischen. Die Mehlmischung zur Eiermasse zufügen und ganz kurz unterrühren, bis sich die Zutaten gerade so verbunden haben und ein homogener Teig entstanden ist.",
+      "Den Teig in die Form füllen und den Biskuitboden für 20 Minuten backen.",
+      "Den Boden nach dem Backen sofort auf einem Kuchengitter stürzen und abkühlen lassen. Anschließend bis zur weiteren Verwendung luftdicht abdecken, da er schnell austrocknet.",
+      "Den Vanillepudding nach Packungsanleitung zubereiten.",
+      "Die Erdbeeren waschen, kleinschneiden und leicht mit Zucker bestreuen",
+      "Anschließsend den Vanillepudding auf den Biskuitboden verteilen und die Erdbeeren darauf verteilen."
     ],
-    "image": null,
+    "image": "images/7_Erdbeerkuchen_mit_Vanillepudding.jpg",
     "servings": 1,
-    "prepTime": "0:10",
-    "notes": "Verwenden Sie eine Mischung aus Käsesorten für zusätzlichen Geschmack."
+    "prepTime": "1:00",
+    "notes": ""
   },
   {
     "id": 8,
-    "name": "Tomato Soup",
+    "name": "Türkische Pasta",
     "description": "Eine wärmende und tröstliche Suppe aus Tomaten, Zwiebeln und Knoblauch.",
     "ingredients": [
-      "Tomaten",
-      "Zwiebel",
+      "Nudeln",
+      "Rinderhackfleisch",
+      "Zwiebeln",
+      "Cherry-Tomaten",
+      "Joghurt",
       "Knoblauch",
-      "Sahne"
+      "Butter",
+      "Paprikagewürz",
+      "Frische Petersilie"
     ],
     "preparations": [
-      "Tomaten mit Zwiebeln und Knoblauch kochen",
-      "Pürieren",
-      "Sahne hinzufügen"
+      "Joghurt mit Knoblauch vermischen und ziehen lassen",
+      "Rinderhackfleisch scharf anbraten und würzen",
+      "Zwiebeln dazu geben",
+      "In der Zwischenzeit Nudeln kochen",
+      "Butter schmelzen und Paprikagewürz dazu geben",
+      "Nudeln mit Hackfleisch, Joghurt, Cherrytomaten, Butter und Petersilie anrichten"
     ],
-    "image": null,
-    "servings": 4,
-    "prepTime": "0:30",
-    "notes": "Mit gegrilltem Käse für eine klassische Mahlzeit kombinieren."
+    "image": "images/8_T_rkische_Pasta.jpg",
+    "servings": 2,
+    "prepTime": "0:45",
+    "notes": ""
   },
   {
     "id": 9,
@@ -456,5 +518,155 @@
     "servings": 2,
     "prepTime": "0:20",
     "notes": "Verwenden Sie Blauschimmelkäse-Dressing für eine klassische Note."
+  },
+  {
+    "id": 25,
+    "name": "Spaghetti Bolognese",
+    "description": "Ein klassisches italienisches Nudelgericht mit einer herzhaften Soße aus Hackfleisch, Tomaten und Kräutern.",
+    "ingredients": [
+      "Spaghetti",
+      "Tomatensoße",
+      "Hackfleisch"
+    ],
+    "preparations": [
+      "Nudeln kochen",
+      "Soße zubereiten",
+      "Zusammenmischen"
+    ],
+    "image": null,
+    "servings": 4,
+    "prepTime": "0:30",
+    "notes": "Verwenden Sie frischen Basilikum für besseren Geschmack."
+  },
+  {
+    "id": 26,
+    "name": "Caesar Salad",
+    "description": "Ein einfacher und erfrischender Salat mit Römersalat, Croutons und cremigem Caesar-Dressing.",
+    "ingredients": [
+      "Salat",
+      "Croutons",
+      "Caesar-Dressing"
+    ],
+    "preparations": [
+      "Alle Zutaten mischen"
+    ],
+    "image": null,
+    "servings": 2,
+    "prepTime": "0:15",
+    "notes": "Fügen Sie gegrilltes Hähnchen für eine vollständige Mahlzeit hinzu."
+  },
+  {
+    "id": 27,
+    "name": "Chicken Curry",
+    "description": "Ein aromatisches Currygericht mit Hähnchen, Currypulver und Kokosmilch.",
+    "ingredients": [
+      "Hähnchen",
+      "Currypulver",
+      "Kokosmilch"
+    ],
+    "preparations": [
+      "Hähnchen kochen",
+      "Currypulver hinzufügen",
+      "Kokosmilch hinzufügen"
+    ],
+    "image": null,
+    "servings": 4,
+    "prepTime": "0:40",
+    "notes": "Mit gedämpftem Reis servieren."
+  },
+  {
+    "id": 28,
+    "name": "Beef Tacos",
+    "description": "Mexikanische Tacos gefüllt mit gewürztem Hackfleisch und frischen Toppings.",
+    "ingredients": [
+      "Taco-Schalen",
+      "Hackfleisch",
+      "Salat",
+      "Tomate"
+    ],
+    "preparations": [
+      "Hackfleisch kochen",
+      "Taco-Schalen mit Hackfleisch und Toppings füllen"
+    ],
+    "image": null,
+    "servings": 3,
+    "prepTime": "0:25",
+    "notes": "Mit Sauerrahm und Salsa garnieren."
+  },
+  {
+    "id": 29,
+    "name": "Vegetable Stir Fry",
+    "description": "Ein schnelles und gesundes Gericht mit gebratenem Gemüse und Sojasauce.",
+    "ingredients": [
+      "Gemischtes Gemüse",
+      "Sojasauce",
+      "Reis"
+    ],
+    "preparations": [
+      "Gemüse anbraten",
+      "Mit Reis servieren"
+    ],
+    "image": null,
+    "servings": 2,
+    "prepTime": "0:20",
+    "notes": "Verwenden Sie Sesamöl für zusätzlichen Geschmack."
+  },
+  {
+    "id": 30,
+    "name": "Pancakes",
+    "description": "Ein klassisches Frühstücksgericht, bestehend aus fluffigen Pfannkuchen.",
+    "ingredients": [
+      "Mehl",
+      "Milch",
+      "Eier",
+      "Zucker"
+    ],
+    "preparations": [
+      "Zutaten mischen",
+      "In einer Pfanne goldbraun backen"
+    ],
+    "image": null,
+    "servings": 4,
+    "prepTime": "0:20",
+    "notes": "Mit Sirup oder frischen Früchten servieren."
+  },
+  {
+    "id": 31,
+    "name": "Grilled Cheese Sandwich",
+    "description": "Ein einfacher und schneller Toast mit geschmolzenem Käse.",
+    "ingredients": [
+      "Brot",
+      "Käse",
+      "Butter"
+    ],
+    "preparations": [
+      "Brot mit Butter bestreichen",
+      "Käse hinzufügen",
+      "Grillen, bis es goldbraun ist"
+    ],
+    "image": null,
+    "servings": 1,
+    "prepTime": "0:10",
+    "notes": "Verwenden Sie eine Mischung aus Käsesorten für zusätzlichen Geschmack."
+  },
+  {
+    "id": 32,
+    "name": "Tomato Soup",
+    "description": "Eine wärmende und tröstliche Suppe aus Tomaten, Zwiebeln und Knoblauch.",
+    "ingredients": [
+      "Tomaten",
+      "Zwiebel",
+      "Knoblauch",
+      "Sahne"
+    ],
+    "preparations": [
+      "Tomaten mit Zwiebeln und Knoblauch kochen",
+      "Pürieren",
+      "Sahne hinzufügen"
+    ],
+    "image": null,
+    "servings": 4,
+    "prepTime": "0:30",
+    "notes": "Mit gegrilltem Käse für eine klassische Mahlzeit kombinieren."
   }
   ]
