@@ -49,7 +49,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
         // Floating Action Button
         val fabAddRecipe: View = view.findViewById(R.id.fabAddRecipe)
         fabAddRecipe.setOnClickListener {
-            showAddRecipeDialog()
+            showAddRecipeMenu()
         }
 
         // Add swipe functionality
@@ -79,6 +79,21 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             }
         })
         itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun showAddRecipeMenu() {
+        val menuDialog = AddRecipeMenuDialogFragment(
+            onManual = {
+                showAddRecipeDialog()
+            },
+            onInstagram = {
+                ImportInstagramDialogFragment().show(parentFragmentManager, "ImportInstagramDialog")
+            },
+            onWebsite = {
+                ImportWebsiteDialogFragment().show(parentFragmentManager, "ImportWebsiteDialog")
+            }
+        )
+        menuDialog.show(parentFragmentManager, "AddRecipeMenuDialog")
     }
 
     private fun showAddRecipeDialog() {
@@ -139,12 +154,12 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
     private fun filterRecipes(recipes: MutableList<Recipe>): MutableList<Recipe> {
         val favoriteIds = loadFavorites().map { it.id }
-        return recipes.filter { it.id !in swipedRecipes && it.id !in favoriteIds }.toMutableList()
+        return (sessionRecipes ?: recipes).filter { it.id !in swipedRecipes && it.id !in favoriteIds }.toMutableList()
     }
 
     private fun onRecipeSwiped(recipe: Recipe) {
         swipedRecipes.add(recipe.id) // Hide recipe for the session
-        val updatedRecipes = filterRecipes(loadRecipes())
+        val updatedRecipes = filterRecipes(sessionRecipes ?: loadRecipes())
         adapter.updateRecipes(updatedRecipes)
 
         // Add the swiped recipe to favorites

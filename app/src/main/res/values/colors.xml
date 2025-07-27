@@ -27,7 +27,7 @@
     <color name="custom_dark_red">#8B0000</color>
     <color name="custom_dark_green">#006400</color>
     <color name="custom_dark_yellow">#FFD700</color>
-    <color name="custom_dark_orange">#FF8C00</color>
+    <color name="custom_dark_orange">#FFB300</color>
     <color name="custom_dark_purple">#4B0082</color>
     <color name="custom_dark_gray_1">#1c1c1c</color>
     <color name="custom_dark_gray_2">#3a3a3a</color>
@@ -45,7 +45,7 @@
     <color name="AcardTextColor">#000000</color>
     <color name="AbuttonColor">#FF8C00</color>
     <color name="AbuttonTextColor">#ffffff</color>
-    <color name="AprimaryColor">#FFA07A</color>
+    <color name="AprimaryColor">#FFB300</color>
     <color name="AsecondaryColor">#8cbbcd</color>
 
 

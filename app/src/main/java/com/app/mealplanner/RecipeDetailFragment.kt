@@ -48,6 +48,7 @@ class RecipeDetailFragment : Fragment() {
         val titleTextView: TextView = view.findViewById(R.id.recipe_title)
         val descriptionTextView: TextView = view.findViewById(R.id.recipe_description)
         val recipeImageView: ImageView = view.findViewById(R.id.recipe_image) // Recipe image view
+        val recipePrepTime: TextView = view.findViewById(R.id.recipe_prep_time)
 
         recipe?.let {
             titleTextView.text = it.name
@@ -63,6 +64,7 @@ class RecipeDetailFragment : Fragment() {
             } else {
                 recipeImageView.setImageResource(android.R.drawable.ic_menu_gallery) // Default image
             }
+            recipePrepTime.text = "Zubereitung: ${it.prepTime}"
         }
 
         val ingredientsButton: Button = view.findViewById(R.id.ingredients_button)

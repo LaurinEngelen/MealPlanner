@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
 import com.app.mealplanner.model.Recipe
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -81,7 +83,9 @@ class AddRecipeDialogFragment : DialogFragment() {
             dismiss() // Close the dialog
         }
 
-        val uploadButton = view.findViewById<LinearLayout>(R.id.buttonUploadImage)
+        val uploadButton = view.findViewById<View>(R.id.buttonUploadImage)
+        val selectedImageView = view.findViewById<ImageView>(R.id.selectedImageView)
+        val uploadPlaceholder = view.findViewById<View>(R.id.uploadPlaceholder)
         uploadButton.setOnClickListener {
             openImagePicker()
         }
@@ -181,7 +185,12 @@ class AddRecipeDialogFragment : DialogFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK) {
             imageUri = data?.data
-            if (imageUri != null) {
+            val selectedImageView = view?.findViewById<ImageView>(R.id.selectedImageView)
+            val uploadPlaceholder = view?.findViewById<View>(R.id.uploadPlaceholder)
+            if (imageUri != null && selectedImageView != null && uploadPlaceholder != null) {
+                selectedImageView.setImageURI(imageUri)
+                selectedImageView.visibility = View.VISIBLE
+                uploadPlaceholder.visibility = View.GONE
                 Toast.makeText(requireContext(), "Image selected successfully", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Image selection failed", Toast.LENGTH_SHORT).show()

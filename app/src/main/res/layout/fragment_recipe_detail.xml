@@ -55,22 +55,7 @@
                 android:id="@+id/recipe_prep_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Zubereitung: 15m"
-                android:layout_marginEnd="16dp" />
-
-            <TextView
-                android:id="@+id/recipe_cook_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kochzeit: 15m"
-                android:layout_marginEnd="16dp" />
-
-            <TextView
-                android:id="@+id/recipe_total_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gesamt: 30m" />
-
+                android:text="Zubereitung: 15m" />
         </LinearLayout>
 
         <TextView
