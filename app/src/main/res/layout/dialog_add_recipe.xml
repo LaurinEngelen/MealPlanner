@@ -159,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Zubereitung"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/AcardTextColor"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp" />
 
@@ -209,7 +209,7 @@
                         android:hint="Stunden"
                         android:inputType="number"
                         android:background="@drawable/edit_text_background"
-                        android:textColor="@android:color/darker_gray" />
+                        android:textColor="@color/AcardTextColor" />
 
                     <EditText
                         android:id="@+id/inputPrepMinutes"
@@ -220,7 +220,7 @@
                         android:inputType="number"
                         android:background="@drawable/edit_text_background"
                         android:layout_marginStart="8dp"
-                        android:textColor="@android:color/darker_gray"/>
+                        android:textColor="@color/AcardTextColor"/>
                 </LinearLayout>
 
                 <!-- Notizen -->
