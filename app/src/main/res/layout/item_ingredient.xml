@@ -3,12 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="0dp">
+    android:padding="0dp"
+    android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/ingredientText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Ingredient"
         android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/dragHandle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_sort_by_size"
+        android:contentDescription="Verschieben"
+        android:padding="4dp"
+        android:layout_marginEnd="8dp" />
+
+    <ImageView
+        android:id="@+id/deleteIngredient"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:contentDescription="Löschen"
+        android:padding="4dp" />
 </LinearLayout>

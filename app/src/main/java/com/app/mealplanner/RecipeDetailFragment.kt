@@ -99,12 +99,12 @@ class RecipeDetailFragment : Fragment() {
         when (layoutResId) {
             R.layout.recipe_detail_ingredients -> {
                 val recyclerView = contentContainer.findViewById<RecyclerView>(R.id.ingredients_recycler_view)
-                recyclerView?.adapter = IngredientsAdapter(recipe?.ingredients ?: emptyList(), android.R.color.black)
+                recyclerView?.adapter = IngredientsAdapter((recipe?.ingredients ?: emptyList()).toMutableList(), android.R.color.black, onDelete = { _ -> }, onStartDrag = { _ -> }, showEditIcons = false)
                 recyclerView?.layoutManager = LinearLayoutManager(requireContext())
             }
             R.layout.recipe_detail_instructions -> {
                 val recyclerView = contentContainer.findViewById<RecyclerView>(R.id.instructions_recycler_view)
-                recyclerView?.adapter = PreparationsAdapter(recipe?.preparations ?: emptyList(), android.R.color.black)
+                recyclerView?.adapter = PreparationsAdapter((recipe?.preparations ?: emptyList()).toMutableList(), android.R.color.black, onDelete = { _ -> }, onStartDrag = { _ -> }, showEditIcons = false)
                 recyclerView?.layoutManager = LinearLayoutManager(requireContext())
             }
         }

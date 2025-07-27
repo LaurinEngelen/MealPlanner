@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
@@ -91,11 +92,63 @@ class AddRecipeDialogFragment : DialogFragment() {
         }
 
         // Set up RecyclerView
-        ingredientsAdapter = IngredientsAdapter(ingredients, android.R.color.black)
+        val ingredientTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val from = viewHolder.adapterPosition
+                val to = target.adapterPosition
+                ingredientsAdapter.onItemMove(from, to)
+                return true
+            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+        })
+        ingredientTouchHelper.attachToRecyclerView(ingredientsRecyclerView)
+
+        val preparationTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val from = viewHolder.adapterPosition
+                val to = target.adapterPosition
+                preparationsAdapter.onItemMove(from, to)
+                return true
+            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+        })
+        preparationTouchHelper.attachToRecyclerView(preparationsRecyclerView)
+
+        ingredientsAdapter = IngredientsAdapter(
+            ingredients,
+            android.R.color.black,
+            onDelete = { pos ->
+                ingredients.removeAt(pos)
+                ingredientsAdapter.notifyItemRemoved(pos)
+            },
+            onStartDrag = { viewHolder ->
+                ingredientTouchHelper.startDrag(viewHolder)
+            }
+        )
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         ingredientsRecyclerView.adapter = ingredientsAdapter
 
-        preparationsAdapter = PreparationsAdapter(preparations, android.R.color.black)
+        preparationsAdapter = PreparationsAdapter(
+            preparations,
+            android.R.color.black,
+            onDelete = { pos ->
+                preparations.removeAt(pos)
+                preparationsAdapter.notifyItemRemoved(pos)
+            },
+            onStartDrag = { viewHolder ->
+                preparationTouchHelper.startDrag(viewHolder)
+            }
+        )
         preparationsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         preparationsRecyclerView.adapter = preparationsAdapter
 

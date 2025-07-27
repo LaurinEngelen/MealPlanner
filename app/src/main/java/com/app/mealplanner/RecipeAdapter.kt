@@ -39,7 +39,13 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
         val currentRecipe = recipes[position]
         holder.nameTextView.text = currentRecipe.name
 
-        val ingredientsAdapter = IngredientsAdapter(currentRecipe.ingredients ?: emptyList(), R.color.AcardTextColor)
+        val ingredientsAdapter = IngredientsAdapter(
+            currentRecipe.ingredients?.toMutableList() ?: mutableListOf(),
+            R.color.AcardTextColor,
+            onDelete = { _ -> },
+            onStartDrag = { _ -> },
+            showEditIcons = false
+        )
         val gridLayoutManager = GridLayoutManager(holder.itemView.context, if ((currentRecipe.ingredients?.size ?: 0) > 5) 2 else 1)
         holder.ingredientsRecyclerView.layoutManager = gridLayoutManager
         holder.ingredientsRecyclerView.adapter = ingredientsAdapter
