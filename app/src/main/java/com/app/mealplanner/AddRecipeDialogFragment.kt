@@ -137,6 +137,11 @@ class AddRecipeDialogFragment : DialogFragment() {
             val prepTime = "${prepHoursInput.text}:${prepMinutesInput.text}"
             val notes = notesInput.text.toString()
 
+            var imagePath: String? = null
+            if (imageUri != null) {
+                imagePath = saveImageToInternalStorageAndReturnPath(imageUri!!, name)
+            }
+
             if (name.isNotEmpty() && ingredients.isNotEmpty() && preparations.isNotEmpty()) {
                 val newRecipe = Recipe(
                     id = System.currentTimeMillis().toInt(),
@@ -144,7 +149,7 @@ class AddRecipeDialogFragment : DialogFragment() {
                     description = description, // Save the description
                     ingredients = ingredients,
                     preparations = preparations,
-                    image = selectedImagePath,
+                    image = imagePath,
                     servings = servings,
                     prepTime = prepTime,
                     notes = notes
@@ -221,6 +226,28 @@ class AddRecipeDialogFragment : DialogFragment() {
             Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Failed to save image: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveImageToInternalStorageAndReturnPath(imageUri: Uri, recipeName: String): String? {
+        return try {
+            val inputStream: InputStream? = requireContext().contentResolver.openInputStream(imageUri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            val imageDir = File(requireContext().filesDir, "image")
+            if (!imageDir.exists()) {
+                imageDir.mkdir()
+            }
+            val sanitizedRecipeName = recipeName.replace("[^a-zA-Z0-9]".toRegex(), "_")
+            val fileName = "${System.currentTimeMillis()}_${sanitizedRecipeName}.jpg"
+            val imageFile = File(imageDir, fileName)
+            val outputStream = FileOutputStream(imageFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            imageFile.absolutePath
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Failed to save image: ${e.message}", Toast.LENGTH_SHORT).show()
+            null
         }
     }
 

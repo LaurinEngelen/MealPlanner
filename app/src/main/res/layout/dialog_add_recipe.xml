@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AbackgroundColor"
+    android:background="@android:color/white"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/card_background"
-        android:padding="16dp"
-        android:elevation="4dp">
+        android:padding="0dp"
+        android:elevation="0dp">
 
         <!-- AppBar -->
         <LinearLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:orientation="horizontal"
-            android:padding="8dp"
-            android:background="@android:color/transparent">
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/backButton"
@@ -42,196 +43,210 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Titel -->
-        <EditText
-            android:id="@+id/inputRecipeTitle"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Rezept Titel"
-            android:inputType="text"
-            android:textSize="18sp"
-            android:background="@android:color/transparent"
-            android:textColor="@color/AcardTextColor"
-            android:textColorHint="@android:color/darker_gray"
-            android:layout_marginTop="12dp"/>
-
-        <!-- Bild Upload -->
-        <FrameLayout
-            android:id="@+id/buttonUploadImage"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/image_placeholder"
-            android:clipToOutline="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:id="@+id/selectedImageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                android:contentDescription="Ausgewähltes Bild" />
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
-                android:id="@+id/uploadPlaceholder"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/white"
+                android:padding="0dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <!-- Titel -->
+                <EditText
+                    android:id="@+id/inputRecipeTitle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_camera"
-                    android:contentDescription="Bild auswählen"
-                    app:tint="@color/AcardTextColor" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bild hochladen"
+                    android:hint="Rezept Titel"
+                    android:inputType="text"
+                    android:textSize="18sp"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/AcardTextColor"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp" />
+                    android:textColorHint="@android:color/darker_gray"
+                    android:layout_marginTop="12dp"/>
+
+                <!-- Bild Upload -->
+                <FrameLayout
+                    android:id="@+id/buttonUploadImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/image_placeholder"
+                    android:clipToOutline="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/selectedImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        android:contentDescription="Ausgewähltes Bild" />
+
+                    <LinearLayout
+                        android:id="@+id/uploadPlaceholder"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:contentDescription="Bild auswählen"
+                            app:tint="@color/AcardTextColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bild hochladen"
+                            android:textColor="@color/AcardTextColor"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Beschreibung -->
+                <EditText
+                    android:id="@+id/inputDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Beschreibung"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:gravity="top"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/AcardTextColor"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:layout_marginTop="16dp" />
+
+                <!-- Zutaten -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Zutaten"
+                    android:textColor="@color/AcardTextColor"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingredientsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_text_background" />
+
+                <EditText
+                    android:id="@+id/inputNewIngredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Zutat hinzufügen"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:background="@drawable/edit_text_background"
+                    android:textColor="@color/AcardTextColor"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Zubereitung -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Zubereitung"
+                    android:textColor="@android:color/darker_gray"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/instructionsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_marginTop="8dp" />
+
+                <EditText
+                    android:id="@+id/inputNewInstruction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Zubereitungsschritt hinzufügen"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/AcardTextColor"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <!-- Portionen -->
+                <EditText
+                    android:id="@+id/inputServings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Portionen"
+                    android:inputType="number"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/AcardTextColor"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <!-- Zubereitungszeit -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp">
+
+                    <EditText
+                        android:id="@+id/inputPrepHours"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Stunden"
+                        android:inputType="number"
+                        android:background="@drawable/edit_text_background"
+                        android:textColor="@android:color/darker_gray" />
+
+                    <EditText
+                        android:id="@+id/inputPrepMinutes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Minuten"
+                        android:inputType="number"
+                        android:background="@drawable/edit_text_background"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@android:color/darker_gray"/>
+                </LinearLayout>
+
+                <!-- Notizen -->
+                <EditText
+                    android:id="@+id/inputNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Notizen (optional)"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/AcardTextColor"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <!-- Button -->
+                <Button
+                    android:id="@+id/buttonAddRecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rezept hinzufügen"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/AprimaryColor"
+                    android:textColor="@android:color/white" />
+
             </LinearLayout>
-        </FrameLayout>
-
-        <!-- Beschreibung -->
-        <EditText
-            android:id="@+id/inputDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Beschreibung"
-            android:inputType="textMultiLine"
-            android:minLines="2"
-            android:gravity="top"
-            android:background="@android:color/transparent"
-            android:textColor="@color/AcardTextColor"
-            android:textColorHint="@android:color/darker_gray"
-            android:layout_marginTop="16dp" />
-
-        <!-- Zutaten -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Zutaten"
-            android:textColor="@color/AcardTextColor"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredientsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/edit_text_background" />
-
-        <EditText
-            android:id="@+id/inputNewIngredient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Zutat hinzufügen"
-            android:inputType="text"
-            android:imeOptions="actionDone"
-            android:background="@drawable/edit_text_background"
-            android:textColor="@color/AcardTextColor"
-            android:textColorHint="@android:color/darker_gray"
-            android:layout_marginTop="8dp" />
-
-        <!-- Zubereitung -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Zubereitung"
-            android:textColor="@color/AcardTextColor"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/instructionsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="8dp" />
-
-        <EditText
-            android:id="@+id/inputNewInstruction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Zubereitungsschritt hinzufügen"
-            android:inputType="text"
-            android:imeOptions="actionDone"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/AcardTextColor"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <!-- Portionen -->
-        <EditText
-            android:id="@+id/inputServings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Portionen"
-            android:inputType="number"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/AcardTextColor"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <!-- Zubereitungszeit -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp">
-
-            <EditText
-                android:id="@+id/inputPrepHours"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Stunden"
-                android:inputType="number"
-                android:background="@drawable/edit_text_background"
-                android:textColor="@color/AcardTextColor" />
-
-            <EditText
-                android:id="@+id/inputPrepMinutes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Minuten"
-                android:inputType="number"
-                android:background="@drawable/edit_text_background"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/AcardTextColor" />
-        </LinearLayout>
-
-        <!-- Notizen -->
-        <EditText
-            android:id="@+id/inputNotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Notizen (optional)"
-            android:inputType="textMultiLine"
-            android:minLines="2"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/AcardTextColor"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <!-- Button -->
-        <Button
-            android:id="@+id/buttonAddRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rezept hinzufügen"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/AprimaryColor"
-            android:textColor="@android:color/white" />
-
+        </ScrollView>
     </LinearLayout>
-</ScrollView>
+</FrameLayout>
