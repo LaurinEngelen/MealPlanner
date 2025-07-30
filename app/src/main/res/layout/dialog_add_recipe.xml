@@ -210,7 +210,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Zubereitungszeit (Stunden und Minuten gemeinsam)"
+                    android:text="Zubereitungszeit"
                     android:textColor="@color/AcardTextColor"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp" />
@@ -230,7 +230,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Notizen (optional)"
+                    android:text="Notizen"
                     android:textColor="@color/AcardTextColor"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp" />

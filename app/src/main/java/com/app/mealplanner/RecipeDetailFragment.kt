@@ -70,6 +70,12 @@ class RecipeDetailFragment : Fragment() {
             recipePrepTime.text = "Zubereitung: ${it.prepTime}"
         }
 
+        // Dynamische Portionsangabe und Notizen setzen
+        val notesTitle: TextView = view.findViewById(R.id.recipe_notes_title)
+        val notesContent: TextView = view.findViewById(R.id.recipe_notes_content)
+        notesContent.text = recipe?.notes ?: "Keine Notizen vorhanden."
+
+
         val ingredientsButton: Button = view.findViewById(R.id.ingredients_button)
         val instructionsButton: Button = view.findViewById(R.id.instructions_button)
         val nutritionsButton: Button = view.findViewById(R.id.nutrition_button)
@@ -104,6 +110,13 @@ class RecipeDetailFragment : Fragment() {
                 val recyclerView = contentContainer.findViewById<RecyclerView>(R.id.ingredients_recycler_view)
                 recyclerView?.adapter = IngredientsAdapter((recipe?.ingredients ?: emptyList()).toMutableList(), android.R.color.black, onDelete = { _ -> }, onStartDrag = { _ -> }, showEditIcons = false)
                 recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                // Portionsangabe dynamisch setzen
+                val servingsCount: TextView? = contentContainer.findViewById(R.id.servings_count)
+                if (recipe != null && recipe?.servings != null && recipe?.servings!! > 0) {
+                    servingsCount?.text = recipe?.servings.toString()
+                } else {
+                    servingsCount?.text = "-"
+                }
             }
             R.layout.recipe_detail_instructions -> {
                 val recyclerView = contentContainer.findViewById<RecyclerView>(R.id.instructions_recycler_view)
