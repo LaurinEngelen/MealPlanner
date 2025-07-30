@@ -21,12 +21,10 @@ MealPlanner ist eine moderne Android-App, mit der du deine Lieblingsrezepte einf
 3. Baue und starte die App auf deinem Gerät oder Emulator.
 
 ## Screenshots
-![Startbildschirm](screenshots/screenshot1.png)
-![Rezept hinzufügen](screenshots/screenshot2.png)
-![Favoriten](screenshots/screenshot3.png)
-![Rezept Details](screenshots/screenshot4.png)
-
-*Hier kannst du später Fotos der App einfügen.*
+<img src="screenshots/screenshot1.png" alt="Startbildschirm" width="300"/>
+<img src="screenshots/screenshot2.png" alt="Rezept hinzufügen" width="300"/>
+<img src="screenshots/screenshot3.png" alt="Favoriten" width="300"/>
+<img src="screenshots/screenshot4.png" alt="Rezept Details" width="300"/>
 
 ## Projektstruktur
 
