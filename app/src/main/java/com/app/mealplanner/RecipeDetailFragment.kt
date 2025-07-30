@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
 import com.app.mealplanner.model.Recipe
 import com.bumptech.glide.Glide
+import java.io.File
 
 class RecipeDetailFragment : Fragment() {
 
@@ -54,15 +55,17 @@ class RecipeDetailFragment : Fragment() {
             titleTextView.text = it.name
             descriptionTextView.text = it.description
 
-            // Load the recipe image using Glide
-            if (!it.image.isNullOrEmpty()) {
+            // Bild-Pfad korrekt auflösen (relativ zu filesDir, falls nicht absolut)
+            val imagePath = it.image
+            val imageFile = if (!imagePath.isNullOrEmpty() && !File(imagePath).isAbsolute) File(requireContext().filesDir, imagePath) else if (!imagePath.isNullOrEmpty()) File(imagePath) else null
+            if (imageFile != null && imageFile.exists()) {
                 Glide.with(this)
-                    .load(it.image)
-                    .placeholder(android.R.drawable.ic_menu_gallery) // Placeholder while loading
-                    .error(android.R.drawable.ic_dialog_alert) // Fallback if loading fails
+                    .load(imageFile)
+                    .placeholder(android.R.drawable.ic_menu_gallery)
+                    .error(android.R.drawable.ic_dialog_alert)
                     .into(recipeImageView)
             } else {
-                recipeImageView.setImageResource(android.R.drawable.ic_menu_gallery) // Default image
+                recipeImageView.setImageResource(android.R.drawable.ic_menu_gallery)
             }
             recipePrepTime.text = "Zubereitung: ${it.prepTime}"
         }

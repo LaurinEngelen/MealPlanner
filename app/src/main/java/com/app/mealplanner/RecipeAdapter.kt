@@ -13,6 +13,7 @@ import com.app.mealplanner.databinding.RecipeItemBinding
 import com.app.mealplanner.model.Recipe
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.GridLayoutManager
+import java.io.File
 
 class RecipeAdapter(private var recipes: MutableList<Recipe>,
                     private val onSwipe: (String) -> Unit) :
@@ -50,14 +51,16 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
         holder.ingredientsRecyclerView.layoutManager = gridLayoutManager
         holder.ingredientsRecyclerView.adapter = ingredientsAdapter
 
-        if (!currentRecipe.image.isNullOrEmpty()) {
+        val imagePath = currentRecipe.image
+        val imageFile = if (!imagePath.isNullOrEmpty() && !File(imagePath).isAbsolute) File(holder.itemView.context.filesDir, imagePath) else if (!imagePath.isNullOrEmpty()) File(imagePath) else null
+        if (imageFile != null && imageFile.exists()) {
             Glide.with(holder.itemView.context)
-                .load(currentRecipe.image)
-                .placeholder(android.R.drawable.ic_menu_gallery) // Placeholder while loading
-                .error(android.R.drawable.ic_dialog_alert) // Fallback if loading fails
+                .load(imageFile)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_dialog_alert)
                 .into(holder.recipeImage)
         } else {
-            holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery) // Default image
+            holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
         holder.preparationList.text = currentRecipe.preparations

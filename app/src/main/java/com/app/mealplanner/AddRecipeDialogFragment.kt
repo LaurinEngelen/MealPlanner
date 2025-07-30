@@ -202,7 +202,7 @@ class AddRecipeDialogFragment : DialogFragment() {
                     description = description, // Save the description
                     ingredients = ingredients,
                     preparations = preparations,
-                    image = imagePath,
+                    image = imagePath, // Nur relativer Pfad
                     servings = servings,
                     prepTime = prepTime,
                     notes = notes
@@ -229,14 +229,9 @@ class AddRecipeDialogFragment : DialogFragment() {
         val newId = (recipes.maxOfOrNull { it.id } ?: 0) + 1
         val recipeWithId = recipe.copy(id = newId)
 
-        if (imageUri != null) {
-            saveImageToInternalStorage(imageUri!!, recipeWithId.id, recipeWithId.name)
-            recipeWithId.image = selectedImagePath // Aktualisiere den Bildpfad im Rezept
-        }
-
+        // Bildpfad bleibt relativ, kein Kopieren/Setzen von absolutem Pfad mehr nötig
         recipes.add(recipeWithId)
         recipesFile.writeText(Gson().toJson(recipes))
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -257,36 +252,14 @@ class AddRecipeDialogFragment : DialogFragment() {
     }
 
     private fun saveImageToInternalStorage(imageUri: Uri, recipeId: Int, recipeName: String) {
-        try {
-            val inputStream: InputStream? = requireContext().contentResolver.openInputStream(imageUri)
-            val bitmap = BitmapFactory.decodeStream(inputStream)
-
-            val imageDir = File(requireContext().filesDir, "image")
-            if (!imageDir.exists()) {
-                imageDir.mkdir()
-            }
-
-            val sanitizedRecipeName = recipeName.replace("[^a-zA-Z0-9]".toRegex(), "_")
-            selectedImagePath = "${imageDir.absolutePath}/${recipeId}_${sanitizedRecipeName}.jpg"
-            val imageFile = File(imageDir, "${recipeId}_${sanitizedRecipeName}.jpg")
-
-            val outputStream = FileOutputStream(imageFile)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            outputStream.flush()
-            outputStream.close()
-
-            selectedImagePath = imageFile.absolutePath
-            Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Failed to save image: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+        // Nicht mehr benötigt, Logik in saveImageToInternalStorageAndReturnPath
     }
 
     private fun saveImageToInternalStorageAndReturnPath(imageUri: Uri, recipeName: String): String? {
         return try {
             val inputStream: InputStream? = requireContext().contentResolver.openInputStream(imageUri)
             val bitmap = BitmapFactory.decodeStream(inputStream)
-            val imageDir = File(requireContext().filesDir, "image")
+            val imageDir = File(requireContext().filesDir, "images")
             if (!imageDir.exists()) {
                 imageDir.mkdir()
             }
@@ -297,7 +270,8 @@ class AddRecipeDialogFragment : DialogFragment() {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
-            imageFile.absolutePath
+            // Nur relativen Pfad speichern
+            "images/$fileName"
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Failed to save image: ${e.message}", Toast.LENGTH_SHORT).show()
             null

@@ -119,13 +119,11 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
                 val type = object : TypeToken<MutableList<Recipe>>() {}.type
                 val recipes: MutableList<Recipe> = Gson().fromJson(json, type)
 
-                // Update image paths to point to internal storage
+                // Entferne die Ersetzung des Bildpfads durch den absoluten Pfad!
                 recipes.forEach { recipe ->
                     if (recipe.image != null) {
                         val imageFile = File(requireContext().filesDir, recipe.image)
-                        if (imageFile.exists()) {
-                            recipe.image = imageFile.absolutePath
-                        } else {
+                        if (!imageFile.exists()) {
                             recipe.image = null // Reset if the image file is missing
                         }
                     }
