@@ -34,9 +34,13 @@ class FavoritesRecipeAdapter(
         val currentRecipe = recipes[position]
         holder.recipeTitle.text = currentRecipe.name
 
-        if (currentRecipe.image != null) {
+        val imagePath = currentRecipe.image
+        val imageFile = if (!imagePath.isNullOrEmpty() && !File(imagePath).isAbsolute) File(holder.itemView.context.filesDir, imagePath) else if (!imagePath.isNullOrEmpty()) File(imagePath) else null
+        if (imageFile != null && imageFile.exists()) {
             Glide.with(holder.itemView.context)
-                .load(File(currentRecipe.image))
+                .load(imageFile)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_dialog_alert)
                 .into(holder.recipeImage)
         } else {
             holder.recipeImage.setImageResource(android.R.drawable.ic_menu_gallery)

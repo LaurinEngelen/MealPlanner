@@ -61,6 +61,7 @@ class PreparationsAdapter(
         val item = preparations.removeAt(fromPosition)
         preparations.add(toPosition, item)
         notifyItemMoved(fromPosition, toPosition)
+        notifyDataSetChanged() // Nummerierung nach Verschieben aktualisieren
     }
 
     fun onItemDismiss(position: Int) {

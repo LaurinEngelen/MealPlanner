@@ -133,7 +133,8 @@ class AddRecipeDialogFragment : DialogFragment() {
             },
             onStartDrag = { viewHolder ->
                 ingredientTouchHelper.startDrag(viewHolder)
-            }
+            },
+            showEditIcons = true // Edit-Icons explizit anzeigen
         )
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         ingredientsRecyclerView.adapter = ingredientsAdapter
@@ -147,7 +148,8 @@ class AddRecipeDialogFragment : DialogFragment() {
             },
             onStartDrag = { viewHolder ->
                 preparationTouchHelper.startDrag(viewHolder)
-            }
+            },
+            showEditIcons = true // Edit-Icons explizit anzeigen
         )
         preparationsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         preparationsRecyclerView.adapter = preparationsAdapter
