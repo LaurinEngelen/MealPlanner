@@ -61,6 +61,7 @@ class IngredientsAdapter(
         val item = ingredients.removeAt(fromPosition)
         ingredients.add(toPosition, item)
         notifyItemMoved(fromPosition, toPosition)
+        notifyDataSetChanged() // Liste immer komplett neu binden wie bei Zubereitung
     }
 
     fun onItemDismiss(position: Int) {

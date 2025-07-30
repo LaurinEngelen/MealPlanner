@@ -70,8 +70,7 @@ class AddRecipeDialogFragment : DialogFragment() {
         val preparationInput: EditText = view.findViewById(R.id.inputDescription)
         val newIngredientInput: EditText = view.findViewById(R.id.inputNewIngredient)
         val servingsInput: EditText = view.findViewById(R.id.inputServings)
-        val prepHoursInput: EditText = view.findViewById(R.id.inputPrepHours)
-        val prepMinutesInput: EditText = view.findViewById(R.id.inputPrepMinutes)
+        val prepTimeInput: EditText = view.findViewById(R.id.inputPrepTime)
         val notesInput: EditText = view.findViewById(R.id.inputNotes)
         val saveButton: Button = view.findViewById(R.id.buttonAddRecipe)
         val ingredientsRecyclerView: RecyclerView = view.findViewById(R.id.ingredientsRecyclerView)
@@ -189,7 +188,7 @@ class AddRecipeDialogFragment : DialogFragment() {
             val name = nameInput.text.toString()
             val description = preparationInput.text.toString() // Capture the description
             val servings = servingsInput.text.toString().toIntOrNull() ?: 0
-            val prepTime = "${prepHoursInput.text}:${prepMinutesInput.text}"
+            val prepTime = prepTimeInput.text.toString()
             val notes = notesInput.text.toString()
 
             var imagePath: String? = null

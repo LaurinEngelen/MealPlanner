@@ -43,7 +43,7 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -53,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@android:color/white"
-                android:padding="0dp">
+                android:padding="0dp"
+                android:descendantFocusability="beforeDescendants">
 
                 <!-- Titel -->
                 <EditText
@@ -138,18 +139,21 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ingredientsRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/edit_text_background" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:background="@android:color/transparent"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
 
                 <EditText
                     android:id="@+id/inputNewIngredient"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Zutat hinzufügen"
+                    android:hint="Zutat hinzufügen ..."
                     android:inputType="text"
                     android:imeOptions="actionDone"
-                    android:background="@drawable/edit_text_background"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/AcardTextColor"
                     android:textColorHint="@android:color/darker_gray"
                     android:layout_marginTop="8dp" />
@@ -166,64 +170,71 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/instructionsRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:background="@drawable/edit_text_background"
-                    android:layout_marginTop="8dp" />
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="0dp" />
 
                 <EditText
                     android:id="@+id/inputNewInstruction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Zubereitungsschritt hinzufügen"
+                    android:hint="Zubereitungsschritt hinzufügen ..."
                     android:inputType="text"
                     android:imeOptions="actionDone"
-                    android:background="@drawable/edit_text_background"
+                    android:background="@android:color/transparent"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/AcardTextColor"
                     android:textColorHint="@android:color/darker_gray" />
 
                 <!-- Portionen -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Portionen"
+                    android:textColor="@color/AcardTextColor"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
+
                 <EditText
                     android:id="@+id/inputServings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Portionen"
                     android:inputType="number"
-                    android:background="@drawable/edit_text_background"
-                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/AcardTextColor"
-                    android:textColorHint="@android:color/darker_gray" />
+                    android:textColorHint="@android:color/darker_gray"
+                    android:layout_marginTop="8dp" />
 
                 <!-- Zubereitungszeit -->
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
+                    android:text="Zubereitungszeit (Stunden und Minuten gemeinsam)"
+                    android:textColor="@color/AcardTextColor"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
 
-                    <EditText
-                        android:id="@+id/inputPrepHours"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Stunden"
-                        android:inputType="number"
-                        android:background="@drawable/edit_text_background"
-                        android:textColor="@color/AcardTextColor" />
-
-                    <EditText
-                        android:id="@+id/inputPrepMinutes"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Minuten"
-                        android:inputType="number"
-                        android:background="@drawable/edit_text_background"
-                        android:layout_marginStart="8dp"
-                        android:textColor="@color/AcardTextColor"/>
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/inputPrepTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="z.B. 1:30 für 1 Stunde 30 Minuten"
+                    android:inputType="text"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/AcardTextColor"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:layout_marginTop="8dp" />
 
                 <!-- Notizen -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notizen (optional)"
+                    android:textColor="@color/AcardTextColor"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
+
                 <EditText
                     android:id="@+id/inputNotes"
                     android:layout_width="match_parent"
@@ -231,10 +242,10 @@
                     android:hint="Notizen (optional)"
                     android:inputType="textMultiLine"
                     android:minLines="2"
-                    android:background="@drawable/edit_text_background"
-                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/AcardTextColor"
-                    android:textColorHint="@android:color/darker_gray" />
+                    android:textColorHint="@android:color/darker_gray"
+                    android:layout_marginTop="8dp" />
 
                 <!-- Button -->
                 <Button
@@ -247,6 +258,6 @@
                     android:textColor="@android:color/white" />
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </FrameLayout>
