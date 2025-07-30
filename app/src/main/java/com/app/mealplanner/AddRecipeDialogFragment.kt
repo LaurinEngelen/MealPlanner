@@ -184,6 +184,20 @@ class AddRecipeDialogFragment : DialogFragment() {
             }
         }
 
+        val addRecipeButton: Button = view.findViewById(R.id.buttonAddRecipe)
+        // Tastatur-Listener: Button ausblenden, wenn Keyboard sichtbar ist
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = android.graphics.Rect()
+            requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = requireActivity().window.decorView.height
+            val keypadHeight = screenHeight - rect.bottom
+            if (keypadHeight > screenHeight * 0.15) {
+                addRecipeButton.visibility = View.GONE
+            } else {
+                addRecipeButton.visibility = View.VISIBLE
+            }
+        }
+
         saveButton.setOnClickListener {
             val name = nameInput.text.toString()
             val description = preparationInput.text.toString() // Capture the description
