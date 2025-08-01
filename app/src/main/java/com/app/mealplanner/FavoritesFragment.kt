@@ -30,10 +30,10 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         adapter = FavoritesRecipeAdapter(
             mutableListOf(),
             onSwipe = {}, // Handle swipe if needed
-            onRemoveClick = { recipe -> removeFavorite(recipe) } // Handle remove click
-        ) { recipe ->
-            openRecipeDetail(recipe)
-        }
+            onRemoveClick = { recipe -> removeFavorite(recipe) }, // Handle remove click
+            onClick = { recipe -> openRecipeDetail(recipe) },
+            onLongClick = { recipe -> showRecipeOptions(recipe) } // Handle long click
+        )
         recyclerView.adapter = adapter
 
         val favorites = loadFavorites()
@@ -174,5 +174,62 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             val favorites: MutableList<Recipe> = Gson().fromJson(json, type)
             adapter.updateRecipes(favorites) // Aktualisiert die RecyclerView
         }
+    }
+
+    private fun showRecipeOptions(recipe: Recipe) {
+        val dialog = RecipeOptionsDialogFragment(
+            recipe = recipe,
+            onEdit = { recipeToEdit ->
+                showEditRecipeDialog(recipeToEdit)
+            },
+            onDelete = { recipeToDelete ->
+                deleteFavoriteRecipe(recipeToDelete)
+            }
+        )
+        dialog.show(parentFragmentManager, "RecipeOptionsDialog")
+    }
+
+    private fun showEditRecipeDialog(recipe: Recipe) {
+        val dialog = AddRecipeDialogFragment()
+        dialog.setRecipeToEdit(recipe) // Assume this method exists to pre-fill the dialog
+        dialog.setOnRecipeAddedListener(object : AddRecipeDialogFragment.OnRecipeAddedListener {
+            override fun onRecipeAdded(updatedRecipe: Recipe) {
+                updateRecipeInFavorites(updatedRecipe)
+            }
+        })
+        dialog.show(parentFragmentManager, "EditRecipeDialog")
+    }
+
+    private fun updateRecipeInFavorites(updatedRecipe: Recipe) {
+        val favoritesFile = File(requireContext().filesDir, "favorites.json")
+        if (favoritesFile.exists()) {
+            val json = favoritesFile.readText()
+            val type = object : TypeToken<MutableList<Recipe>>() {}.type
+            val favorites: MutableList<Recipe> = Gson().fromJson(json, type)
+
+            // Find and update the recipe
+            val index = favorites.indexOfFirst { it.id == updatedRecipe.id }
+            if (index != -1) {
+                favorites[index] = updatedRecipe
+                favoritesFile.writeText(Gson().toJson(favorites))
+
+                // Update the UI
+                allFavorites = favorites
+                val filteredFavorites = if (view?.findViewById<EditText>(R.id.search_input)?.text.toString().isEmpty()) {
+                    allFavorites
+                } else {
+                    allFavorites.filter { recipe ->
+                        recipe.name.contains(view?.findViewById<EditText>(R.id.search_input)?.text.toString(), ignoreCase = true)
+                    }
+                }
+                adapter.updateRecipes(filteredFavorites.toMutableList())
+            }
+        }
+    }
+
+    private fun deleteFavoriteRecipe(recipe: Recipe) {
+        removeFavorite(recipe)
+        // Update allFavorites list
+        allFavorites.removeIf { it.id == recipe.id }
     }
 }

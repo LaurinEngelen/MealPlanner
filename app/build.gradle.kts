@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -8,7 +10,22 @@ android {
     namespace = "com.app.mealplanner"
     compileSdk = 35
 
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(localPropertiesFile.inputStream())
+    }
+    val chatGptApiKey = localProperties.getProperty("CHATGPT_API_KEY") ?: "fehler"
+
     defaultConfig {
+        buildConfigField(
+            "String",
+            "CHATGPT_API_KEY",
+            "\"$chatGptApiKey\""
+        )
+
+
+
         applicationId = "com.app.mealplanner"
         minSdk = 29
         targetSdk = 35
@@ -39,6 +56,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     kotlinOptions {
@@ -67,6 +85,8 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation ("androidx.cardview:cardview:1.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("org.json:json:20230618")
 
 
 }

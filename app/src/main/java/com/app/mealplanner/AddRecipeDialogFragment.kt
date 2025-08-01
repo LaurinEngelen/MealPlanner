@@ -1,3 +1,7 @@
+package com.app.mealplanner
+
+import IngredientsAdapter
+import PreparationsAdapter
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -19,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.mealplanner.R
 import com.app.mealplanner.model.Recipe
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -30,6 +34,7 @@ class AddRecipeDialogFragment : DialogFragment() {
 
     private var selectedImagePath: String? = null
     private var imageUri: Uri? = null
+    private var recipeToEdit: Recipe? = null // Variable to hold the recipe being edited
 
     interface OnRecipeAddedListener {
         fun onRecipeAdded(recipe: Recipe)
@@ -41,11 +46,17 @@ class AddRecipeDialogFragment : DialogFragment() {
         this.listener = listener
     }
 
+    fun setRecipeToEdit(recipe: Recipe) {
+        this.recipeToEdit = recipe
+    }
+
     private val ingredients = mutableListOf<String>()
     private lateinit var ingredientsAdapter: IngredientsAdapter
 
     private val preparations = mutableListOf<String>()
     private lateinit var preparationsAdapter: PreparationsAdapter
+
+    private lateinit var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +76,122 @@ class AddRecipeDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Adapter initialisieren, bevor sie verwendet werden
+        ingredientsAdapter = IngredientsAdapter(
+            ingredients,
+            android.R.color.black,
+            onDelete = { pos ->
+                ingredients.removeAt(pos)
+                ingredientsAdapter.notifyItemRemoved(pos)
+            },
+            onStartDrag = { viewHolder ->
+                // Drag-Logik
+            },
+            showEditIcons = true // Edit-Icons explizit anzeigen
+        )
+        preparationsAdapter = PreparationsAdapter(
+            preparations,
+            android.R.color.black,
+            onDelete = { pos ->
+                preparations.removeAt(pos)
+                preparationsAdapter.notifyItemRemoved(pos)
+            },
+            onStartDrag = { viewHolder ->
+                // Drag-Logik
+            },
+            showEditIcons = true // Edit-Icons explizit anzeigen
+        )
+
+        // Rezepttext aus Argumenten übernehmen und Felder vorausfüllen
+        val importedRecipeText = arguments?.getString("imported_recipe_text")
+        if (!importedRecipeText.isNullOrEmpty()) {
+            val nameInput: EditText = view.findViewById(R.id.inputRecipeTitle)
+            val descriptionInput: EditText = view.findViewById(R.id.inputDescription)
+            val servingsInput: EditText = view.findViewById(R.id.inputServings)
+            val prepTimeInput: EditText = view.findViewById(R.id.inputPrepTime)
+            val notesInput: EditText = view.findViewById(R.id.inputNotes)
+
+            try {
+                val json = com.google.gson.JsonParser.parseString(importedRecipeText).asJsonObject
+                android.util.Log.d("AddRecipeDialog", "JSON: $json")
+                nameInput.setText(json["name"]?.asString ?: "")
+                servingsInput.setText(json["servings"]?.asInt?.toString() ?: "")
+                prepTimeInput.setText(json["prepTime"]?.asString ?: "")
+                notesInput.setText(json["notes"]?.asString ?: "")
+
+                // Beschreibung korrekt setzen
+                descriptionInput.setText(json["description"]?.asString ?: "")
+
+                // Zutaten als Liste
+                ingredients.clear()
+                json["ingredients"]?.asJsonArray?.forEach { elem ->
+                    ingredients.add(elem.asString)
+                }
+                ingredientsAdapter.notifyDataSetChanged()
+
+                // Zubereitung: Nur Array zulassen
+                preparations.clear()
+                val preparationsElement = json["preparations"]
+                android.util.Log.d("AddRecipeDialog", "preparationsElement: $preparationsElement")
+                if (preparationsElement != null && preparationsElement.isJsonArray) {
+                    preparationsElement.asJsonArray.forEach { elem ->
+                        android.util.Log.d("AddRecipeDialog", "preparation step: ${elem.asString}")
+                        preparations.add(elem.asString)
+                    }
+                } else {
+                    android.util.Log.e("AddRecipeDialog", "preparations ist kein Array!")
+                }
+                android.util.Log.d("AddRecipeDialog", "preparations list: $preparations")
+                preparationsAdapter.notifyDataSetChanged()
+
+            } catch (e: Exception) {
+                android.util.Log.e("AddRecipeDialog", "Rezept konnte nicht geladen werden: ${e.message}")
+            }
+        }
+
+        // If editing an existing recipe, pre-fill the fields
+        recipeToEdit?.let { recipe ->
+            val nameInput: EditText = view.findViewById(R.id.inputRecipeTitle)
+            val descriptionInput: EditText = view.findViewById(R.id.inputDescription)
+            val servingsInput: EditText = view.findViewById(R.id.inputServings)
+            val prepTimeInput: EditText = view.findViewById(R.id.inputPrepTime)
+            val notesInput: EditText = view.findViewById(R.id.inputNotes)
+
+            nameInput.setText(recipe.name)
+            descriptionInput.setText(recipe.description ?: "")
+            servingsInput.setText(recipe.servings?.toString() ?: "")
+            prepTimeInput.setText(recipe.prepTime ?: "")
+            notesInput.setText(recipe.notes ?: "")
+
+            // Pre-fill ingredients
+            ingredients.clear()
+            recipe.ingredients?.let { recipeIngredients ->
+                ingredients.addAll(recipeIngredients)
+            }
+            ingredientsAdapter.notifyDataSetChanged()
+
+            // Pre-fill preparations
+            preparations.clear()
+            recipe.preparations?.let { recipePreparations ->
+                preparations.addAll(recipePreparations)
+            }
+            preparationsAdapter.notifyDataSetChanged()
+
+            // Set the existing image if available
+            selectedImagePath = recipe.image
+            if (!recipe.image.isNullOrEmpty()) {
+                val selectedImageView = view.findViewById<ImageView>(R.id.selectedImageView)
+                val uploadPlaceholder = view.findViewById<View>(R.id.uploadPlaceholder)
+
+                val imageFile = File(requireContext().filesDir, recipe.image)
+                if (imageFile.exists()) {
+                    selectedImageView.setImageURI(Uri.fromFile(imageFile))
+                    selectedImageView.visibility = View.VISIBLE
+                    uploadPlaceholder.visibility = View.GONE
+                }
+            }
+        }
 
         val nameInput: EditText = view.findViewById(R.id.inputRecipeTitle)
         val preparationInput: EditText = view.findViewById(R.id.inputDescription)
@@ -123,33 +250,9 @@ class AddRecipeDialogFragment : DialogFragment() {
         })
         preparationTouchHelper.attachToRecyclerView(preparationsRecyclerView)
 
-        ingredientsAdapter = IngredientsAdapter(
-            ingredients,
-            android.R.color.black,
-            onDelete = { pos ->
-                ingredients.removeAt(pos)
-                ingredientsAdapter.notifyItemRemoved(pos)
-            },
-            onStartDrag = { viewHolder ->
-                ingredientTouchHelper.startDrag(viewHolder)
-            },
-            showEditIcons = true // Edit-Icons explizit anzeigen
-        )
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         ingredientsRecyclerView.adapter = ingredientsAdapter
 
-        preparationsAdapter = PreparationsAdapter(
-            preparations,
-            android.R.color.black,
-            onDelete = { pos ->
-                preparations.removeAt(pos)
-                preparationsAdapter.notifyItemRemoved(pos)
-            },
-            onStartDrag = { viewHolder ->
-                preparationTouchHelper.startDrag(viewHolder)
-            },
-            showEditIcons = true // Edit-Icons explizit anzeigen
-        )
         preparationsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         preparationsRecyclerView.adapter = preparationsAdapter
 
@@ -184,51 +287,86 @@ class AddRecipeDialogFragment : DialogFragment() {
             }
         }
 
+        // Button neu anlegen
         val addRecipeButton: Button = view.findViewById(R.id.buttonAddRecipe)
+        addRecipeButton.visibility = View.VISIBLE
+        addRecipeButton.isEnabled = true
         // Tastatur-Listener: Button ausblenden, wenn Keyboard sichtbar ist
-        view.viewTreeObserver.addOnGlobalLayoutListener {
+        globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
             val rect = android.graphics.Rect()
             requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
             val screenHeight = requireActivity().window.decorView.height
             val keypadHeight = screenHeight - rect.bottom
             if (keypadHeight > screenHeight * 0.15) {
-                addRecipeButton.visibility = View.GONE
+                if (addRecipeButton.visibility != View.GONE) {
+                    addRecipeButton.visibility = View.GONE
+                }
             } else {
-                addRecipeButton.visibility = View.VISIBLE
+                if (addRecipeButton.visibility != View.VISIBLE) {
+                    addRecipeButton.visibility = View.VISIBLE
+                }
             }
         }
+        view.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
 
         saveButton.setOnClickListener {
             val name = nameInput.text.toString()
-            val description = preparationInput.text.toString() // Capture the description
+            val description = preparationInput.text.toString()
             val servings = servingsInput.text.toString().toIntOrNull() ?: 0
             val prepTime = prepTimeInput.text.toString()
             val notes = notesInput.text.toString()
+            var imagePath: String? = selectedImagePath // Verwende das heruntergeladene Bild
 
-            var imagePath: String? = null
-            if (imageUri != null) {
+            // Falls kein heruntergeladenes Bild vorhanden, aber ein manuell ausgewähltes Bild
+            if (imagePath == null && imageUri != null) {
                 imagePath = saveImageToInternalStorageAndReturnPath(imageUri!!, name)
             }
 
             if (name.isNotEmpty() && ingredients.isNotEmpty() && preparations.isNotEmpty()) {
-                val newRecipe = Recipe(
-                    id = System.currentTimeMillis().toInt(),
-                    name = name,
-                    description = description, // Save the description
-                    ingredients = ingredients,
-                    preparations = preparations,
-                    image = imagePath, // Nur relativer Pfad
-                    servings = servings,
-                    prepTime = prepTime,
-                    notes = notes
-                )
-                saveRecipe(newRecipe)
-                listener?.onRecipeAdded(newRecipe)
+                val recipe = if (recipeToEdit != null) {
+                    // Editing existing recipe - keep the same ID
+                    Recipe(
+                        id = recipeToEdit!!.id,
+                        name = name,
+                        description = description,
+                        ingredients = ingredients.toList(),
+                        preparations = preparations.toList(),
+                        image = imagePath,
+                        servings = servings,
+                        prepTime = prepTime,
+                        notes = notes
+                    )
+                } else {
+                    // Creating new recipe - generate new ID
+                    Recipe(
+                        id = System.currentTimeMillis().toInt(),
+                        name = name,
+                        description = description,
+                        ingredients = ingredients.toList(),
+                        preparations = preparations.toList(),
+                        image = imagePath,
+                        servings = servings,
+                        prepTime = prepTime,
+                        notes = notes
+                    )
+                }
+
+                android.util.Log.d("AddRecipeDialog", "Saving recipe: ${recipe.name} with ID: ${recipe.id}")
+                saveRecipe(recipe)
+                android.util.Log.d("AddRecipeDialog", "Recipe saved, calling listener")
+                listener?.onRecipeAdded(recipe)
+                android.util.Log.d("AddRecipeDialog", "Listener called, dismissing dialog")
                 dismiss()
+            } else {
+                android.util.Log.e("AddRecipeDialog", "Recipe validation failed - name: '${name}', ingredients: ${ingredients.size}, preparations: ${preparations.size}")
             }
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        view?.viewTreeObserver?.removeOnGlobalLayoutListener(globalLayoutListener)
+    }
 
     private fun saveRecipe(recipe: Recipe) {
         val recipesFile = File(requireContext().filesDir, "recipes.json")
@@ -240,13 +378,25 @@ class AddRecipeDialogFragment : DialogFragment() {
             mutableListOf()
         }
 
-        // Generiere eine neue ID basierend auf der höchsten existierenden ID
-        val newId = (recipes.maxOfOrNull { it.id } ?: 0) + 1
-        val recipeWithId = recipe.copy(id = newId)
+        if (recipeToEdit != null) {
+            // Editing existing recipe - replace the existing one
+            val index = recipes.indexOfFirst { it.id == recipe.id }
+            if (index != -1) {
+                recipes[index] = recipe
+                android.util.Log.d("AddRecipeDialog", "Existing recipe updated at index $index with ID: ${recipe.id}")
+            } else {
+                // Fallback: if not found, add as new
+                recipes.add(recipe)
+                android.util.Log.d("AddRecipeDialog", "Recipe not found for editing, added as new with ID: ${recipe.id}")
+            }
+        } else {
+            // Creating new recipe - add to list
+            recipes.add(recipe)
+            android.util.Log.d("AddRecipeDialog", "New recipe added with ID: ${recipe.id}")
+        }
 
-        // Bildpfad bleibt relativ, kein Kopieren/Setzen von absolutem Pfad mehr nötig
-        recipes.add(recipeWithId)
         recipesFile.writeText(Gson().toJson(recipes))
+        android.util.Log.d("AddRecipeDialog", "Recipe saved to file")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

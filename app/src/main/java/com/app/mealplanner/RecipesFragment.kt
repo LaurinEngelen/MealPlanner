@@ -1,6 +1,5 @@
 package com.app.mealplanner
 
-import AddRecipeDialogFragment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -30,12 +29,16 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewRecipes)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = RecipeAdapter(mutableListOf<Recipe>()) { recipeId ->
-            val recipe = loadRecipes().find { it.id.toString() == recipeId }
-            if (recipe != null) {
-                onRecipeSwiped(recipe)
-            }
-        }
+        adapter = RecipeAdapter(
+            mutableListOf<Recipe>(),
+            onSwipe = { recipeId ->
+                val recipe = loadRecipes().find { it.id.toString() == recipeId }
+                if (recipe != null) {
+                    onRecipeSwiped(recipe)
+                }
+            },
+            onLongClick = { recipe -> showRecipeOptions(recipe) } // Add long click handler
+        )
         recyclerView.adapter = adapter
 
         // Rezepte nur beim ersten Aufruf mischen
@@ -70,7 +73,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
                 if (direction == ItemTouchHelper.LEFT) {
                     // Nach links wischen: Nur für die Session ausblenden
                     swipedRecipes.add(recipe.id)
-                    val updatedRecipes = filterRecipes(loadRecipes())
+                    val updatedRecipes = filterRecipes(sessionRecipes!!)
                     adapter.updateRecipes(updatedRecipes)
                 } else if (direction == ItemTouchHelper.RIGHT) {
                     // Nach rechts wischen: Zu den Favoriten hinzufügen
@@ -100,12 +103,29 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
         val dialog = AddRecipeDialogFragment()
         dialog.setOnRecipeAddedListener(object : AddRecipeDialogFragment.OnRecipeAddedListener {
             override fun onRecipeAdded(recipe: Recipe) {
+                Log.d("RecipesFragment", "New recipe added: ${recipe.name} with ID: ${recipe.id}")
+
+                // Session-Rezepte initialisieren falls noch nicht geschehen
                 if (sessionRecipes == null) {
                     sessionRecipes = loadRecipes().shuffled().toMutableList()
+                    Log.d("RecipesFragment", "Session recipes initialized with ${sessionRecipes!!.size} recipes")
                 }
-                sessionRecipes!!.add(0, recipe) // Neues Rezept an den Anfang der Session-Liste setzen
+
+                // Neues Rezept an den Anfang der Session-Liste setzen
+                sessionRecipes!!.add(0, recipe)
+                Log.d("RecipesFragment", "Recipe added to sessionRecipes. New size: ${sessionRecipes!!.size}")
+
+                // Gefilterte Rezepte aktualisieren und anzeigen
                 val filteredRecipes = filterRecipes(sessionRecipes!!)
-                adapter.updateRecipes(filteredRecipes) // RecyclerView aktualisieren
+                Log.d("RecipesFragment", "Filtered recipes size: ${filteredRecipes.size}")
+
+                adapter.updateRecipes(filteredRecipes)
+                Log.d("RecipesFragment", "Adapter updated with ${filteredRecipes.size} recipes")
+
+                // Zur obersten Position scrollen, um das neue Rezept zu zeigen
+                val recyclerView: RecyclerView = requireView().findViewById(R.id.recyclerViewRecipes)
+                recyclerView.scrollToPosition(0)
+                Log.d("RecipesFragment", "Scrolled to position 0")
             }
         })
         dialog.show(parentFragmentManager, "AddRecipeDialog")
@@ -152,7 +172,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
     private fun filterRecipes(recipes: MutableList<Recipe>): MutableList<Recipe> {
         val favoriteIds = loadFavorites().map { it.id }
-        return (sessionRecipes ?: recipes).filter { it.id !in swipedRecipes && it.id !in favoriteIds }.toMutableList()
+        return recipes.filter { it.id !in swipedRecipes && it.id !in favoriteIds }.toMutableList()
     }
 
     private fun onRecipeSwiped(recipe: Recipe) {
@@ -263,6 +283,107 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             )
         } else {
             Log.d("RecipesFragment", "recipes.json file does not exist in internal storage.")
+        }
+    }
+
+    fun addNewRecipeToTop(recipe: Recipe) {
+        Log.d("RecipesFragment", "addNewRecipeToTop called with recipe: ${recipe.name} ID: ${recipe.id}")
+
+        // Session-Rezepte initialisieren falls noch nicht geschehen
+        if (sessionRecipes == null) {
+            sessionRecipes = loadRecipes().shuffled().toMutableList()
+            Log.d("RecipesFragment", "Session recipes initialized with ${sessionRecipes!!.size} recipes")
+        }
+
+        // Neues Rezept an den Anfang der Session-Liste setzen
+        sessionRecipes!!.add(0, recipe)
+        Log.d("RecipesFragment", "Recipe added to sessionRecipes. New size: ${sessionRecipes!!.size}")
+
+        // Gefilterte Rezepte aktualisieren und anzeigen
+        val filteredRecipes = filterRecipes(sessionRecipes!!)
+        Log.d("RecipesFragment", "Filtered recipes size: ${filteredRecipes.size}")
+
+        adapter.updateRecipes(filteredRecipes)
+        Log.d("RecipesFragment", "Adapter updated with ${filteredRecipes.size} recipes")
+
+        // Zur obersten Position scrollen, um das neue Rezept zu zeigen
+        val recyclerView: RecyclerView = requireView().findViewById(R.id.recyclerViewRecipes)
+        recyclerView.scrollToPosition(0)
+        Log.d("RecipesFragment", "Scrolled to position 0")
+    }
+
+    private fun showRecipeOptions(recipe: Recipe) {
+        val dialog = RecipeOptionsDialogFragment(
+            recipe = recipe,
+            onEdit = { recipeToEdit ->
+                showEditRecipeDialog(recipeToEdit)
+            },
+            onDelete = { recipeToDelete ->
+                deleteRecipe(recipeToDelete)
+            }
+        )
+        dialog.show(parentFragmentManager, "RecipeOptionsDialog")
+    }
+
+    private fun showEditRecipeDialog(recipe: Recipe) {
+        val dialog = AddRecipeDialogFragment()
+        dialog.setRecipeToEdit(recipe) // Assume this method exists to pre-fill the dialog
+        dialog.setOnRecipeAddedListener(object : AddRecipeDialogFragment.OnRecipeAddedListener {
+            override fun onRecipeAdded(updatedRecipe: Recipe) {
+                updateRecipeInList(updatedRecipe)
+            }
+        })
+        dialog.show(parentFragmentManager, "EditRecipeDialog")
+    }
+
+    private fun updateRecipeInList(updatedRecipe: Recipe) {
+        val recipesFile = File(requireContext().filesDir, "recipes.json")
+        if (recipesFile.exists()) {
+            val json = recipesFile.readText()
+            val type = object : TypeToken<MutableList<Recipe>>() {}.type
+            val recipes: MutableList<Recipe> = Gson().fromJson(json, type)
+
+            // Find and update the recipe
+            val index = recipes.indexOfFirst { it.id == updatedRecipe.id }
+            if (index != -1) {
+                recipes[index] = updatedRecipe
+                recipesFile.writeText(Gson().toJson(recipes))
+
+                // Update session recipes if they exist
+                sessionRecipes?.let { sessionList ->
+                    val sessionIndex = sessionList.indexOfFirst { it.id == updatedRecipe.id }
+                    if (sessionIndex != -1) {
+                        sessionList[sessionIndex] = updatedRecipe
+                    }
+                }
+
+                // Update the UI
+                val filteredRecipes = filterRecipes(sessionRecipes ?: loadRecipes())
+                adapter.updateRecipes(filteredRecipes)
+            }
+        }
+    }
+
+    private fun deleteRecipe(recipe: Recipe) {
+        val recipesFile = File(requireContext().filesDir, "recipes.json")
+        if (recipesFile.exists()) {
+            val json = recipesFile.readText()
+            val type = object : TypeToken<MutableList<Recipe>>() {}.type
+            val recipes: MutableList<Recipe> = Gson().fromJson(json, type)
+
+            // Remove from recipes file
+            recipes.removeIf { it.id == recipe.id }
+            recipesFile.writeText(Gson().toJson(recipes))
+
+            // Remove from session recipes if they exist
+            sessionRecipes?.removeIf { it.id == recipe.id }
+
+            // Update the UI
+            val filteredRecipes = filterRecipes(sessionRecipes ?: loadRecipes())
+            adapter.updateRecipes(filteredRecipes)
+
+            // Also remove from favorites if it exists there
+            removeFavorite(recipe)
         }
     }
 }

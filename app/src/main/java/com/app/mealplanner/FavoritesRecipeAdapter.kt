@@ -14,7 +14,8 @@ class FavoritesRecipeAdapter(
     private var recipes: MutableList<Recipe>,
     private val onSwipe: (String) -> Unit,
     private val onRemoveClick: (Recipe) -> Unit,
-    private val onClick: (Recipe) -> Unit // Add onClick callback
+    private val onClick: (Recipe) -> Unit,
+    private val onLongClick: (Recipe) -> Unit // Add onLongClick callback
 ) : RecyclerView.Adapter<FavoritesRecipeAdapter.FavoritesRecipeViewHolder>() {
 
     class FavoritesRecipeViewHolder(private val binding: NewRecipeItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -53,6 +54,10 @@ class FavoritesRecipeAdapter(
         }
         holder.itemView.setOnClickListener {
             onClick(currentRecipe) // Trigger the callback with the clicked recipe
+        }
+        holder.itemView.setOnLongClickListener {
+            onLongClick(currentRecipe) // Trigger long click callback
+            true
         }
     }
 

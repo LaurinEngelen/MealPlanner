@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import java.io.File
 
 class RecipeAdapter(private var recipes: MutableList<Recipe>,
-                    private val onSwipe: (String) -> Unit) :
+                    private val onSwipe: (String) -> Unit,
+                    private val onLongClick: ((Recipe) -> Unit)? = null) :
     RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     class RecipeViewHolder(private val binding: RecipeItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -77,6 +78,14 @@ class RecipeAdapter(private var recipes: MutableList<Recipe>,
             holder.itemView.findViewById<TextView>(R.id.notesLabel).visibility = View.VISIBLE
             holder.notes.text = currentRecipe.notes
         }*/
+
+        // Add long click listener if provided
+        onLongClick?.let { longClickListener ->
+            holder.itemView.setOnLongClickListener {
+                longClickListener(currentRecipe)
+                true
+            }
+        }
     }
 
     override fun getItemCount(): Int = recipes.size
