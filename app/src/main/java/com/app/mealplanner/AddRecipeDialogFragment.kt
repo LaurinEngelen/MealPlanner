@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import java.util.UUID
 
 class AddRecipeDialogFragment : DialogFragment() {
 
@@ -401,23 +403,53 @@ class AddRecipeDialogFragment : DialogFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK) {
-            imageUri = data?.data
-            val selectedImageView = view?.findViewById<ImageView>(R.id.selectedImageView)
-            val uploadPlaceholder = view?.findViewById<View>(R.id.uploadPlaceholder)
-            if (imageUri != null && selectedImageView != null && uploadPlaceholder != null) {
-                selectedImageView.setImageURI(imageUri)
-                selectedImageView.visibility = View.VISIBLE
-                uploadPlaceholder.visibility = View.GONE
-                Toast.makeText(requireContext(), "Image selected successfully", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "Image selection failed", Toast.LENGTH_SHORT).show()
+
+        when (requestCode) {
+            REQUEST_IMAGE_PICK -> {
+                if (resultCode == Activity.RESULT_OK && data?.data != null) {
+                    // Start internal crop activity instead of external one
+                    startInternalCropActivity(data.data!!)
+                } else {
+                    Toast.makeText(requireContext(), "Bildauswahl fehlgeschlagen", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            REQUEST_IMAGE_CROP -> {
+                if (resultCode == Activity.RESULT_OK && data?.data != null) {
+                    // Handle the cropped image from internal crop activity
+                    val croppedImageUri = data.data!!
+                    imageUri = croppedImageUri
+
+                    val selectedImageView = view?.findViewById<ImageView>(R.id.selectedImageView)
+                    val uploadPlaceholder = view?.findViewById<View>(R.id.uploadPlaceholder)
+
+                    selectedImageView?.setImageURI(croppedImageUri)
+                    selectedImageView?.visibility = View.VISIBLE
+                    uploadPlaceholder?.visibility = View.GONE
+
+                    Toast.makeText(requireContext(), "Bild erfolgreich zugeschnitten", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Zuschneiden abgebrochen", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
-    private fun saveImageToInternalStorage(imageUri: Uri, recipeId: Int, recipeName: String) {
-        // Nicht mehr benötigt, Logik in saveImageToInternalStorageAndReturnPath
+    private fun startInternalCropActivity(sourceUri: Uri) {
+        val cropIntent = Intent(requireContext(), ImageCropActivity::class.java)
+        cropIntent.putExtra("imageUri", sourceUri)
+        startActivityForResult(cropIntent, REQUEST_IMAGE_CROP)
+    }
+
+    companion object {
+        private const val REQUEST_IMAGE_PICK = 1001
+        private const val REQUEST_IMAGE_CROP = 1002
+    }
+
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_IMAGE_PICK)
     }
 
     private fun saveImageToInternalStorageAndReturnPath(imageUri: Uri, recipeName: String): String? {
@@ -441,15 +473,5 @@ class AddRecipeDialogFragment : DialogFragment() {
             Toast.makeText(requireContext(), "Failed to save image: ${e.message}", Toast.LENGTH_SHORT).show()
             null
         }
-    }
-
-    companion object {
-        private const val REQUEST_IMAGE_PICK = 1001
-    }
-
-    private fun openImagePicker() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_IMAGE_PICK)
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonContainer"
+        android:scaleType="centerInside" />
+
+    <com.app.mealplanner.CropOverlayView
+        android:id="@+id/cropOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonContainer" />
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="#CC000000">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Abbrechen"
+            android:textColor="#fff"
+            android:background="@drawable/rounded_red_button" />
+
+        <Button
+            android:id="@+id/btnCrop"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Zuschneiden"
+            android:textColor="#fff"
+            android:background="@drawable/rounded_orange_button" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -87,6 +87,5 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("org.json:json:20230618")
-
-
+    implementation("androidx.activity:activity-ktx:1.8.2")
 }
